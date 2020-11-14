@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_slanted_gradient"
+    tools:context=".ResultsActivity">
+
+
+
+    <TextView
+        android:id="@+id/results_LBL_title"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="End Results"
+        android:textSize="50dp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:id="@+id/results_LBL_winner"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/results_LBL_title"
+        android:layout_marginTop="20dp"
+
+        android:text="Winner shown here"
+        android:gravity="center"
+        android:textSize="40sp"
+        />
+    <ImageView
+        android:id="@+id/results_IMG_medal"
+
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/results_LBL_winner"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/medal"
+
+        />
+
+    <Button
+        android:id="@+id/results_BTN_exit"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="30dp"
+
+        android:backgroundTint="@color/white"
+        android:text="Exit"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:id="@+id/results_BTN_restart"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
+
+        android:backgroundTint="@color/white"
+        android:text="Restart"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        />
+
+</RelativeLayout>

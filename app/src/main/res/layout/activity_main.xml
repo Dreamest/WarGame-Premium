@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/game_background"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/main_LBL_title"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+
+        android:text="Game O' War"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        />
+    <ImageView
+        android:id="@+id/main_IMG_leftIcon"
+
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentLeft="true"
+
+        android:src="@drawable/ic_character_1"
+        />
+    <TextView
+        android:id="@+id/main_LBL_leftScore"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/main_IMG_leftIcon"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="50dp"
+        android:layout_alignParentLeft="true"
+
+
+        android:text="26"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/main_IMG_leftCard"
+
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_toRightOf="@+id/main_IMG_leftIcon"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="70dp"
+
+        />
+
+
+    <ImageView
+        android:id="@+id/main_IMG_rightIcon"
+
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+
+        android:src="@drawable/ic_character_2" />
+
+    <TextView
+        android:id="@+id/main_LBL_rightScore"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/main_IMG_rightIcon"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="53dp"
+        android:layout_alignParentRight="true"
+
+
+        android:text="26"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/main_IMG_rightCard"
+
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_toLeftOf="@+id/main_IMG_rightIcon"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="70dp"
+
+        />
+
+    <ImageButton
+        android:id="@+id/main_BTN_deal"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/main_IMG_leftIcon"
+        android:layout_marginTop="60dp"
+
+
+        android:src="@drawable/ic_play_button"
+        android:background="@drawable/ic_play_button"
+        />
+
+
+
+
+
+</RelativeLayout>
