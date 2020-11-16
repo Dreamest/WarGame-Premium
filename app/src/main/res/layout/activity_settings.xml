@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity"
+    android:background="@drawable/ic_large_triangles"
+    >
+
+    <TextView
+        android:id="@+id/settings_LBL_title"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+
+        android:text="Settings"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        />
+
+    <ImageButton
+        android:id="@+id/settings_BTN_p1Avatar"
+
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/settings_LBL_title"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="100dp"
+
+        android:background="@drawable/ic_character_1"
+        />
+
+    <EditText
+        android:id="@+id/settings_TXT_p1Name"
+
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_toRightOf="@+id/settings_BTN_p1Avatar"
+        android:layout_below="@+id/settings_LBL_title"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+
+        android:inputType="text"
+        android:hint="Player 1 Name"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        />
+
+    <ImageButton
+        android:id="@+id/settings_BTN_p2Avatar"
+
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/settings_BTN_p1Avatar"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="100dp"
+
+        android:background="@drawable/ic_character_2"
+        />
+
+    <EditText
+        android:id="@+id/settings_TXT_p2Name"
+
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_toRightOf="@+id/settings_BTN_p2Avatar"
+        android:layout_below="@+id/settings_TXT_p1Name"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+
+        android:gravity="center"
+        android:inputType="text"
+        android:hint=" Player 2 Name"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        />
+
+
+
+</RelativeLayout>
