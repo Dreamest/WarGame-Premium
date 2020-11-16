@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Card> player2Deck;
     private int p1Score, p2Score;
     private int counter;
-
+    //This is a test update to confirm the repository was forked properly.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
