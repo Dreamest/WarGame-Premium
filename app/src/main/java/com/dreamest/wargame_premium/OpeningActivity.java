@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class OpeningActivity extends AppCompatActivity {
     private Button opening_BTN_play;
-    private Button opening_BTN_avatars;
+    private Button opening_BTN_settings;
     private Button opening_BTN_leaderboard;
     private String leftName, rightName;
 
@@ -20,7 +20,7 @@ public class OpeningActivity extends AppCompatActivity {
         setContentView(R.layout.activity_opening);
 
         opening_BTN_play = findViewById(R.id.opening_BTN_play);
-        opening_BTN_avatars = findViewById(R.id.opening_BTN_avatars);
+        opening_BTN_settings = findViewById(R.id.opening_BTN_settings);
         opening_BTN_leaderboard = findViewById(R.id.opening_BTN_leaderboard);
 
         opening_BTN_play.setOnClickListener(new View.OnClickListener() {
@@ -30,7 +30,7 @@ public class OpeningActivity extends AppCompatActivity {
             }
         });
 
-        opening_BTN_avatars.setOnClickListener(new View.OnClickListener() {
+        opening_BTN_settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeAvatars();

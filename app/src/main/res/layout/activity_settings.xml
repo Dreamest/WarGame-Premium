@@ -52,6 +52,8 @@
         android:background="@color/white"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
         />
 
     <ImageView
@@ -83,6 +85,8 @@
         android:background="@color/white"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
         />
 
 

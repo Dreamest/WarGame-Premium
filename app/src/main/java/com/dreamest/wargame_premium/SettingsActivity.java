@@ -3,6 +3,7 @@ package com.dreamest.wargame_premium;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -12,11 +13,12 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
     }
-
+    
     @Override
     protected void onResume() {
         super.onResume();
         hideSystemUI(); //Credit : https://developer.android.com/training/system-ui/immersive#java
+
     }
 
     private void hideSystemUI() {
@@ -42,5 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
+
+
 
 }

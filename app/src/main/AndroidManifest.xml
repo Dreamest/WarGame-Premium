@@ -9,20 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WarGameBasic">
-        <activity android:name="com.dreamest.wargame_premium.LeaderboardsActivity"
-            android:screenOrientation="landscape" ></activity>
-        <activity android:name="com.dreamest.wargame_premium.SettingsActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name="com.dreamest.wargame_premium.MainActivity"
+        <activity android:name=".AvatarActivity"></activity>
+        <activity
+            android:name=".LeaderboardsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.dreamest.wargame_premium.ResultsActivity"
+            android:name=".SettingsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.dreamest.wargame_premium.OpeningActivity"
+            android:name=".MainActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ResultsActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".OpeningActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
