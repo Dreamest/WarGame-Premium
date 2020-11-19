@@ -22,7 +22,7 @@
         android:textStyle="bold"
         />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/settings_BTN_p1Avatar"
 
         android:layout_width="100dp"
@@ -54,7 +54,7 @@
         android:textColorHint="@color/black"
         />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/settings_BTN_p2Avatar"
 
         android:layout_width="100dp"

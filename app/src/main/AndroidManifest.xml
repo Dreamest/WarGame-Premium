@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dreamest.wargame_basic">
+    package="com.dreamest.wargame_premium">
 
     <application
         android:allowBackup="true"
@@ -9,17 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WarGameBasic">
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".MainActivity" />
-        <activity
-            android:name=".ResultsActivity"
+        <activity android:name="com.dreamest.wargame_premium.LeaderboardsActivity"
+            android:screenOrientation="landscape" ></activity>
+        <activity android:name="com.dreamest.wargame_premium.SettingsActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name="com.dreamest.wargame_premium.MainActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".OpeningActivity"
+            android:name="com.dreamest.wargame_premium.ResultsActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.dreamest.wargame_premium.OpeningActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -1,22 +1,14 @@
-package com.dreamest.wargame_basic;
+package com.dreamest.wargame_premium;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -55,15 +47,10 @@ public class MainActivity extends AppCompatActivity {
                 if(counter == player1Deck.size()) {
                     changeActivity();
                 }
-                turn();
+                else
+                    turn();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        hideSystemUI(); //Credit : https://developer.android.com/training/system-ui/immersive#java
     }
 
     private void turn() {
@@ -128,6 +115,12 @@ public class MainActivity extends AppCompatActivity {
                 deckOfCards.add(new Card(value, suit));
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideSystemUI(); //Credit : https://developer.android.com/training/system-ui/immersive#java
     }
 
     private void hideSystemUI() {

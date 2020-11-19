@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.dreamest.wargame_basic"
+        applicationId "com.dreamest.wargame_premium"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
