@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,10 +24,13 @@ public class OpeningActivity extends AppCompatActivity {
         opening_BTN_settings = findViewById(R.id.opening_BTN_settings);
         opening_BTN_leaderboard = findViewById(R.id.opening_BTN_leaderboard);
 
+
         opening_BTN_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startGame();
+//                startGame();
+                String s = savedInstanceState.getString("p1");
+                Log.d("dddd", s);
             }
         });
 
