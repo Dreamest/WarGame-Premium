@@ -32,7 +32,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="100dp"
 
-        android:background="@drawable/ic_character_1"
         />
 
     <EditText
@@ -66,7 +65,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="100dp"
 
-        android:background="@drawable/ic_character_2"
         />
 
     <EditText
