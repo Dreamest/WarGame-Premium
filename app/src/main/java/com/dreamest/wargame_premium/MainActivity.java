@@ -3,11 +3,15 @@ package com.dreamest.wargame_premium;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +21,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton main_BTN_deal;
     private ImageView main_IMG_leftCard;
     private ImageView main_IMG_rightCard;
+    private ImageView main_IMG_leftIcon;
+    private ImageView main_IMG_rightIcon;
     private TextView main_LBL_leftScore;
     private TextView main_LBL_rightScore;
+    private TextView main_LBL_rightName;
+    private TextView main_LBL_leftName;
     private List<Card> deckOfCards;
     private List<Card> player1Deck;
     private List<Card> player2Deck;
@@ -39,7 +47,10 @@ public class MainActivity extends AppCompatActivity {
         main_IMG_rightCard = findViewById(R.id.main_IMG_rightCard);
         main_LBL_leftScore = findViewById(R.id.main_LBL_leftScore);
         main_LBL_rightScore = findViewById(R.id.main_LBL_rightScore);
-
+        main_LBL_rightName = findViewById(R.id.main_LBL_rightName);
+        main_LBL_leftName = findViewById(R.id.main_LBL_leftName);
+        main_IMG_rightIcon = findViewById(R.id.main_IMG_rightIcon);
+        main_IMG_leftIcon = findViewById(R.id.main_IMG_leftIcon);
 
         initGame();
 
@@ -89,8 +100,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initGame() {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
         p1Score = 0;
         p2Score = 0;
+        String s;
+        s = settings.getString(AvatarActivity.PLAYER_1_AVATAR, AvatarActivity.CHARACTER_1);
+        int playerOneID = getResources().getIdentifier(s, "drawable", getPackageName());
+        main_IMG_leftIcon.setImageResource(playerOneID);
+        s = settings.getString(SettingsActivity.PLAYER_1_NAME, "player 1");
+        main_LBL_leftName.setText(s);
+
+        s = settings.getString(AvatarActivity.PLAYER_2_AVATAR, AvatarActivity.CHARACTER_2);
+        int playerTwoID = getResources().getIdentifier(s, "drawable", getPackageName());
+        main_IMG_rightIcon.setImageResource(playerTwoID);
+        s = settings.getString(SettingsActivity.PLAYER_2_NAME, "player 2");
+        main_LBL_rightName.setText(s);
+
+
         updateScore();
         create_deck();
         dealCards();

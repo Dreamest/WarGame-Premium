@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,14 +25,11 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText settings_TXT_p2Name;
     private ImageButton settings_BTN_p1Avatar;
     private ImageButton settings_BTN_p2Avatar;
+    private Button settings_BTN_return;
     private HideUI hideUI;
 
-
-    private final String PLAYER_1_NAME = "PLAYER_1_NAME";
-    private final String PLAYER_2_NAME = "PLAYER_2_NAME";
-
-
-
+    public static final String PLAYER_1_NAME = "PLAYER_1_NAME";
+    public static final String PLAYER_2_NAME = "PLAYER_2_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +41,14 @@ public class SettingsActivity extends AppCompatActivity {
         settings_TXT_p2Name = findViewById(R.id.settings_TXT_p2Name);
         settings_BTN_p1Avatar = findViewById(R.id.settings_BTN_p1Avatar);
         settings_BTN_p2Avatar = findViewById(R.id.settings_BTN_p2Avatar);
+        settings_BTN_return = findViewById(R.id.settings_BTN_return);
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = settings.edit();
+
+        settings_TXT_p1Name.setText(settings.getString(PLAYER_1_NAME, ""));
+        settings_TXT_p2Name.setText(settings.getString(PLAYER_2_NAME, ""));
+
 
         settings_TXT_p1Name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -86,6 +89,17 @@ public class SettingsActivity extends AppCompatActivity {
                 openAvatarMenu(2);
             }
         });
+
+        settings_BTN_return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                close();
+            }
+        });
+    }
+
+    private void close() {
+        finish();
     }
 
     private void fixUI() {

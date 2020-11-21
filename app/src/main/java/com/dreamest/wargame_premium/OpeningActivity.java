@@ -34,10 +34,7 @@ public class OpeningActivity extends AppCompatActivity {
         opening_BTN_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startGame();
-                String s = settings.getString("P1", "Player One");
-                Log.d("dddd", s);
-
+                startGame();
             }
         });
 
