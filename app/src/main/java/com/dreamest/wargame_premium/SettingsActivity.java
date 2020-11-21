@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -22,6 +24,12 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText settings_TXT_p2Name;
     private ImageButton settings_BTN_p1Avatar;
     private ImageButton settings_BTN_p2Avatar;
+    private HideUI hideUI;
+
+
+    private final String PLAYER_1_NAME = "PLAYER_1_NAME";
+    private final String PLAYER_2_NAME = "PLAYER_2_NAME";
+
 
 
 
@@ -29,30 +37,37 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        hideUI = new HideUI();
 
         settings_TXT_p1Name = findViewById(R.id.settings_TXT_p1Name);
         settings_TXT_p2Name = findViewById(R.id.settings_TXT_p2Name);
         settings_BTN_p1Avatar = findViewById(R.id.settings_BTN_p1Avatar);
         settings_BTN_p2Avatar = findViewById(R.id.settings_BTN_p2Avatar);
 
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = settings.edit();
+
         settings_TXT_p1Name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId== EditorInfo.IME_ACTION_DONE){
+                    editor.putString(PLAYER_1_NAME, v.getText().toString());
+                    editor.apply();
                     settings_TXT_p1Name.clearFocus();
-                    hideSystemUI();
+                    fixUI();
                 }
                 return false;
             }
         });
 
-
         settings_TXT_p2Name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId== EditorInfo.IME_ACTION_DONE){
+                    editor.putString(PLAYER_2_NAME, v.getText().toString());
+                    editor.apply();
                     settings_TXT_p2Name.clearFocus();
-                    hideSystemUI();
+                    fixUI();
                 }
                 return false;
             }
@@ -71,9 +86,10 @@ public class SettingsActivity extends AppCompatActivity {
                 openAvatarMenu(2);
             }
         });
+    }
 
-
-
+    private void fixUI() {
+        hideUI.hideSystemUI(this);
     }
 
     private void openAvatarMenu(int playerNumber) {
@@ -83,48 +99,21 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        outState.putString("test", settings_TXT_p1Name.getText().toString());
-        Log.d("dddd", "onsavedinstance");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
-        hideSystemUI(); //Credit : https://developer.android.com/training/system-ui/immersive#java
-
+        hideUI.hideSystemUI(this);
+        updateAvatars();
     }
 
-    private void hideSystemUI() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE
-                        // Set the content to appear under the system bars so that the
-                        // content doesn't resize when the system bars hide and show.
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        // Hide the nav bar and status bar
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    private void updateAvatars() {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        String s;
+        s = settings.getString(AvatarActivity.PLAYER_1_AVATAR, AvatarActivity.CHARACTER_1);
+        int playerOneID = getResources().getIdentifier(s, "drawable", getPackageName());
+        settings_BTN_p1Avatar.setBackgroundResource(playerOneID);
+
+        s = settings.getString(AvatarActivity.PLAYER_2_AVATAR, AvatarActivity.CHARACTER_2);
+        int playerTwoID = getResources().getIdentifier(s, "drawable", getPackageName());
+        settings_BTN_p2Avatar.setBackgroundResource(playerTwoID);
     }
-
-    // Shows the system bars by removing all the flags
-// except for the ones that make the content appear under the system bars.
-    private void showSystemUI() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    }
-
-
-
 }
