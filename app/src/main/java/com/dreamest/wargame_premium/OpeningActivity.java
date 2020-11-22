@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,7 +23,6 @@ public class OpeningActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opening);
         hideUI = new HideUI();
-
         opening_BTN_play = findViewById(R.id.opening_BTN_play);
         opening_BTN_settings = findViewById(R.id.opening_BTN_settings);
         opening_BTN_leaderboard = findViewById(R.id.opening_BTN_leaderboard);
@@ -34,6 +33,7 @@ public class OpeningActivity extends AppCompatActivity {
         opening_BTN_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(OpeningActivity.this, R.raw.snd_button_click);
                 startGame();
             }
         });
@@ -41,13 +41,15 @@ public class OpeningActivity extends AppCompatActivity {
         opening_BTN_settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeAvatars();
+                Utility.playSound(OpeningActivity.this, R.raw.snd_button_click);
+                openSettings();
             }
         });
 
         opening_BTN_leaderboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(OpeningActivity.this, R.raw.snd_button_click);
                 openLeaderboards();
             }
         });
@@ -58,7 +60,7 @@ public class OpeningActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    private void changeAvatars() {
+    private void openSettings() {
         Intent myIntent = new Intent(this, SettingsActivity.class);
         startActivity(myIntent);
     }
@@ -73,4 +75,5 @@ public class OpeningActivity extends AppCompatActivity {
         super.onResume();
         hideUI.hideSystemUI(this);
     }
+
 }

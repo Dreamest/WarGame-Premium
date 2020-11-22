@@ -31,6 +31,8 @@ public class ResultsActivity extends AppCompatActivity {
         results_BTN_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(ResultsActivity.this, R.raw.snd_button_click);
+
                 closeApp();
             }
         });
@@ -38,6 +40,7 @@ public class ResultsActivity extends AppCompatActivity {
         results_BTN_restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(ResultsActivity.this, R.raw.snd_button_click);
                 restartGame();
             }
         });

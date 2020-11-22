@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(counter == player1Deck.size()) {
-                    
+                    Utility.playSound(MainActivity.this, R.raw.snd_button_click);
+
                     changeActivity();
                 }
                 else

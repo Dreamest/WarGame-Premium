@@ -47,24 +47,28 @@ public class AvatarActivity extends AppCompatActivity {
         avatar_BTN_character1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(AvatarActivity.this, R.raw.snd_button_click);
                 chooseAvatar(currentPlayer, CHARACTER_1, editor);
             }
         });
         avatar_BTN_character2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(AvatarActivity.this, R.raw.snd_button_click);
                 chooseAvatar(currentPlayer, CHARACTER_2, editor);
             }
         });
         avatar_BTN_character3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(AvatarActivity.this, R.raw.snd_button_click);
                 chooseAvatar(currentPlayer, CHARACTER_3, editor);
             }
         });
         avatar_BTN_character4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(AvatarActivity.this, R.raw.snd_button_click);
                 chooseAvatar(currentPlayer, CHARACTER_4, editor);
             }
         });

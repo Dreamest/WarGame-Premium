@@ -79,6 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
         settings_BTN_p1Avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(SettingsActivity.this, R.raw.snd_button_click);
                 openAvatarMenu(1);
 
             }
@@ -86,6 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
         settings_BTN_p2Avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(SettingsActivity.this, R.raw.snd_button_click);
                 openAvatarMenu(2);
             }
         });
@@ -93,6 +95,7 @@ public class SettingsActivity extends AppCompatActivity {
         settings_BTN_return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.playSound(SettingsActivity.this, R.raw.snd_button_click);
                 close();
             }
         });
