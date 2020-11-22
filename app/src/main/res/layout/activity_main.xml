@@ -19,6 +19,21 @@
         android:textSize="40sp"
         android:textStyle="bold"
         />
+
+    <ProgressBar
+        android:id="@+id/main_BAR_progress"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_LBL_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="150dp"
+        android:layout_marginStart="150dp"
+        android:max="26"
+
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+
+        />
     <ImageView
         android:id="@+id/main_IMG_leftIcon"
 

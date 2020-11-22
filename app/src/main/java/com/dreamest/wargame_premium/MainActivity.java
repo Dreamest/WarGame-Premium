@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView main_LBL_rightScore;
     private TextView main_LBL_rightName;
     private TextView main_LBL_leftName;
+    private ProgressBar main_BAR_progress;
     private List<Card> deckOfCards;
     private List<Card> player1Deck;
     private List<Card> player2Deck;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         main_LBL_leftName = findViewById(R.id.main_LBL_leftName);
         main_IMG_rightIcon = findViewById(R.id.main_IMG_rightIcon);
         main_IMG_leftIcon = findViewById(R.id.main_IMG_leftIcon);
+        main_BAR_progress = findViewById(R.id.main_BAR_progress);
 
         initGame();
 
@@ -100,10 +103,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initGame() {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
         p1Score = 0;
         p2Score = 0;
+
+        updateSettings();
+        updateScore();
+        create_deck();
+        dealCards();
+    }
+
+    private void updateSettings() {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         String s;
         s = settings.getString(AvatarActivity.PLAYER_1_AVATAR, AvatarActivity.CHARACTER_1);
         int playerOneID = getResources().getIdentifier(s, "drawable", getPackageName());
@@ -116,16 +127,12 @@ public class MainActivity extends AppCompatActivity {
         main_IMG_rightIcon.setImageResource(playerTwoID);
         s = settings.getString(SettingsActivity.PLAYER_2_NAME, "player 2");
         main_LBL_rightName.setText(s);
-
-
-        updateScore();
-        create_deck();
-        dealCards();
     }
 
     private void updateScore() {
         main_LBL_leftScore.setText(p1Score + "");
         main_LBL_rightScore.setText(p2Score + "");
+        main_BAR_progress.setProgress(counter);
     }
 
     private void dealCards() {
