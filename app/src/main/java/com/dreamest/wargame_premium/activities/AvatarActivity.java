@@ -1,10 +1,13 @@
-package com.dreamest.wargame_premium;
+package com.dreamest.wargame_premium.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.dreamest.wargame_premium.R;
+import com.dreamest.wargame_premium.utilities.Utility;
 
 public class AvatarActivity extends BaseActivity {
     public static final String EXTRA_KEY_PLAYER = "EXTRA_KEY_PLAYER";

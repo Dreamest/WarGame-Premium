@@ -9,23 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WarGameBasic">
-        <activity android:name=".AvatarActivity"
+        <activity android:name=".activities.AvatarActivity"
             android:screenOrientation="landscape"
             />
         <activity
-            android:name=".LeaderboardsActivity"
+            android:name=".activities.LeaderboardsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ResultsActivity"
+            android:name=".activities.ResultsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".OpeningActivity"
+            android:name=".activities.OpeningActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

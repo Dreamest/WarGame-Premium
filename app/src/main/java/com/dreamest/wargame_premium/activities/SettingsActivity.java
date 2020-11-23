@@ -1,4 +1,4 @@
-package com.dreamest.wargame_premium;
+package com.dreamest.wargame_premium.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.dreamest.wargame_premium.utilities.HideUI;
+import com.dreamest.wargame_premium.R;
+import com.dreamest.wargame_premium.utilities.Utility;
 
 public class SettingsActivity extends BaseActivity {
 

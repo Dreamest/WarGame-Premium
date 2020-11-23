@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OpeningActivity"
+    tools:context=".activities.OpeningActivity"
     android:background="@drawable/ic_large_triangles"
     android:orientation="vertical"
     android:gravity="center_horizontal"

@@ -1,4 +1,4 @@
-package com.dreamest.wargame_premium;
+package com.dreamest.wargame_premium.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +10,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.dreamest.wargame_premium.game.Card;
+import com.dreamest.wargame_premium.R;
+import com.dreamest.wargame_premium.utilities.Utility;
 
 import java.util.ArrayList;
 import java.util.Collections;

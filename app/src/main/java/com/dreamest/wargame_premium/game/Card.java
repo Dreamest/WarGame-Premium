@@ -1,4 +1,4 @@
-package com.dreamest.wargame_premium;
+package com.dreamest.wargame_premium.game;
 
 public class Card implements Comparable<Card>{
     private int value;

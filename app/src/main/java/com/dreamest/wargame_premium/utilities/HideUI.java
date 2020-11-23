@@ -1,4 +1,4 @@
-package com.dreamest.wargame_premium;
+package com.dreamest.wargame_premium.utilities;
 
 import android.app.Activity;
 import android.view.View;
@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class HideUI {
 
-    protected static void hideSystemUI(Activity myActivity) {
+    public static void hideSystemUI(Activity myActivity) {
         View decorView = myActivity.getWindow().getDecorView();
         decorView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY

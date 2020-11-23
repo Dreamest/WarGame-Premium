@@ -1,4 +1,4 @@
-package com.dreamest.wargame_premium;
+package com.dreamest.wargame_premium.utilities;
 
 import android.app.Activity;
 import android.media.MediaPlayer;

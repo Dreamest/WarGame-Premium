@@ -1,6 +1,8 @@
-package com.dreamest.wargame_premium;
+package com.dreamest.wargame_premium.activities;
 
 import android.os.Bundle;
+
+import com.dreamest.wargame_premium.R;
 
 public class LeaderboardsActivity extends BaseActivity {
 

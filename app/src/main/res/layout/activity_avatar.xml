@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_large_triangles"
-    tools:context=".AvatarActivity">
+    tools:context=".activities.AvatarActivity">
 
     <TextView
         android:id="@+id/avatar_LBL_title"
@@ -34,7 +34,7 @@
 
             android:layout_height="100dp"
             android:layout_width="100dp"
-            android:layout_gravity="left|top"
+            android:layout_gravity="start|top"
             android:layout_margin="10dp"
 
             android:background="@drawable/ic_character_1"
@@ -48,7 +48,7 @@
             android:layout_margin="10dp"
 
             android:background="@drawable/ic_character_2"
-            android:layout_gravity="left|top"
+            android:layout_gravity="start|top"
             android:text="Button" />
 
         <ImageButton
@@ -59,7 +59,7 @@
             android:layout_margin="10dp"
 
             android:background="@drawable/ic_character_3"
-            android:layout_gravity="left|top"
+            android:layout_gravity="start|top"
             android:text="Button" />
 
         <ImageButton
@@ -70,7 +70,7 @@
             android:layout_margin="10dp"
 
             android:background="@drawable/ic_character_4"
-            android:layout_gravity="left|top"
+            android:layout_gravity="start|top"
             android:text="Button" />
 
     </GridLayout>
