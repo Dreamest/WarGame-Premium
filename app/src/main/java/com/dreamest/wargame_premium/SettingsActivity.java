@@ -26,7 +26,6 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageButton settings_BTN_p1Avatar;
     private ImageButton settings_BTN_p2Avatar;
     private Button settings_BTN_return;
-    private HideUI hideUI;
 
     public static final String PLAYER_1_NAME = "PLAYER_1_NAME";
     public static final String PLAYER_2_NAME = "PLAYER_2_NAME";
@@ -35,7 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        hideUI = new HideUI();
 
         settings_TXT_p1Name = findViewById(R.id.settings_TXT_p1Name);
         settings_TXT_p2Name = findViewById(R.id.settings_TXT_p2Name);
@@ -106,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void fixUI() {
-        hideUI.hideSystemUI(this);
+        HideUI.hideSystemUI(this);
     }
 
     private void openAvatarMenu(int playerNumber) {
@@ -118,9 +116,17 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        hideUI.hideSystemUI(this);
+        HideUI.hideSystemUI(this);
         updateAvatars();
     }
+
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if (hasFocus) {
+//            HideUI.hideSystemUI(this);
+//        }
+//    }
 
     private void updateAvatars() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);

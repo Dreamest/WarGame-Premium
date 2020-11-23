@@ -15,14 +15,14 @@ public class OpeningActivity extends AppCompatActivity {
     private Button opening_BTN_settings;
     private Button opening_BTN_leaderboard;
     private String leftName, rightName;
-    private HideUI hideUI;
+//    private HideUI hideUI;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opening);
-        hideUI = new HideUI();
+//        hideUI = new HideUI();
         opening_BTN_play = findViewById(R.id.opening_BTN_play);
         opening_BTN_settings = findViewById(R.id.opening_BTN_settings);
         opening_BTN_leaderboard = findViewById(R.id.opening_BTN_leaderboard);
@@ -73,7 +73,8 @@ public class OpeningActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        hideUI.hideSystemUI(this);
+        HideUI.hideSystemUI(this);
     }
+
 
 }

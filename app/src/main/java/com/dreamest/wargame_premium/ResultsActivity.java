@@ -14,15 +14,12 @@ public class ResultsActivity extends AppCompatActivity {
     private TextView results_LBL_winner;
     public static final String EXTRA_KEY_WINNER = "EXTRA_KEY_WINNER";
     public static final String EXTRA_KEY_SCORE = "EXTRA_KEY_SCORE";
-    private HideUI hideUI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_results);
-
-        hideUI = new HideUI();
 
         results_BTN_restart = findViewById(R.id.results_BTN_restart);
         results_BTN_exit = findViewById(R.id.results_BTN_exit);
@@ -53,7 +50,7 @@ public class ResultsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        hideUI.hideSystemUI(this); //Credit : https://developer.android.com/training/system-ui/immersive#java
+        HideUI.hideSystemUI(this); //Credit : https://developer.android.com/training/system-ui/immersive#java
     }
 
     private void restartGame() {

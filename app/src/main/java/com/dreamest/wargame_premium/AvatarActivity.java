@@ -24,10 +24,6 @@ public class AvatarActivity extends AppCompatActivity {
     private ImageButton avatar_BTN_character3;
     private ImageButton avatar_BTN_character4;
 
-    private HideUI hideui;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +31,6 @@ public class AvatarActivity extends AppCompatActivity {
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = settings.edit();
-
-        hideui = new HideUI();
 
         int currentPlayer = getIntent().getIntExtra(EXTRA_KEY_PLAYER, -1);
         avatar_BTN_character1 = findViewById(R.id.avatar_BTN_character1);
@@ -77,7 +71,7 @@ public class AvatarActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        hideui.hideSystemUI(this);
+        HideUI.hideSystemUI(this);
     }
 
     private void chooseAvatar(int currentPlayer, String characterIconID, SharedPreferences.Editor editor) {

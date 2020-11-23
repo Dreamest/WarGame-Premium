@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class HideUI {
 
-    protected void hideSystemUI(Activity myActivity) {
+    protected static void hideSystemUI(Activity myActivity) {
         View decorView = myActivity.getWindow().getDecorView();
         decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                         // Set the content to appear under the system bars so that the
                         // content doesn't resize when the system bars hide and show.
                         | View.SYSTEM_UI_FLAG_LAYOUT_STABLE

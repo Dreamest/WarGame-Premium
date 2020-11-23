@@ -149,9 +149,7 @@
         android:layout_below="@id/main_IMG_leftIcon"
         android:layout_marginTop="60dp"
 
-
-        android:src="@drawable/ic_play_button"
-        android:background="@drawable/ic_play_button"
+        android:background="@drawable/ic_pause_button"
         />
 
 
