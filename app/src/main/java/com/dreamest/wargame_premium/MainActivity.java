@@ -1,7 +1,5 @@
 package com.dreamest.wargame_premium;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,7 +17,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private ImageButton main_BTN_deal;
     private ImageView main_IMG_leftCard;
     private ImageView main_IMG_rightCard;
@@ -217,6 +215,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        HideUI.hideSystemUI(this); //Credit : https://developer.android.com/training/system-ui/immersive#java
+//        HideUI.hideSystemUI(this); //Credit : https://developer.android.com/training/system-ui/immersive#java
     }
 }

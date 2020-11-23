@@ -1,16 +1,9 @@
 package com.dreamest.wargame_premium;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -19,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     private EditText settings_TXT_p1Name;
     private EditText settings_TXT_p2Name;
@@ -55,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
                     editor.putString(PLAYER_1_NAME, v.getText().toString());
                     editor.apply();
                     settings_TXT_p1Name.clearFocus();
-                    fixUI();
+                    HideUI.hideSystemUI(SettingsActivity.this);
                 }
                 return false;
             }
@@ -68,7 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
                     editor.putString(PLAYER_2_NAME, v.getText().toString());
                     editor.apply();
                     settings_TXT_p2Name.clearFocus();
-                    fixUI();
+                    HideUI.hideSystemUI(SettingsActivity.this);
                 }
                 return false;
             }
@@ -103,10 +96,6 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
 
-    private void fixUI() {
-        HideUI.hideSystemUI(this);
-    }
-
     private void openAvatarMenu(int playerNumber) {
         Intent myIntent = new Intent(this, AvatarActivity.class);
         myIntent.putExtra(AvatarActivity.EXTRA_KEY_PLAYER, playerNumber);
@@ -116,7 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        HideUI.hideSystemUI(this);
+//        HideUI.hideSystemUI(this);
         updateAvatars();
     }
 

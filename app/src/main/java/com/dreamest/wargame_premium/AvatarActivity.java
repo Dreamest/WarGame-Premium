@@ -1,15 +1,12 @@
 package com.dreamest.wargame_premium;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class AvatarActivity extends AppCompatActivity {
+public class AvatarActivity extends BaseActivity {
     public static final String EXTRA_KEY_PLAYER = "EXTRA_KEY_PLAYER";
     public static final String CHARACTER_1 = "ic_character_1";
     public static final String CHARACTER_2 = "ic_character_2";
@@ -71,7 +68,7 @@ public class AvatarActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        HideUI.hideSystemUI(this);
+//        HideUI.hideSystemUI(this);
     }
 
     private void chooseAvatar(int currentPlayer, String characterIconID, SharedPreferences.Editor editor) {

@@ -1,14 +1,12 @@
 package com.dreamest.wargame_premium;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ResultsActivity extends AppCompatActivity {
+public class ResultsActivity extends BaseActivity {
     private Button results_BTN_restart;
     private Button results_BTN_exit;
     private TextView results_LBL_winner;
@@ -50,7 +48,7 @@ public class ResultsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        HideUI.hideSystemUI(this); //Credit : https://developer.android.com/training/system-ui/immersive#java
+//        HideUI.hideSystemUI(this); //Credit : https://developer.android.com/training/system-ui/immersive#java
     }
 
     private void restartGame() {
