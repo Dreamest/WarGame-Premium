@@ -4,8 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/game_background"
     tools:context=".activities.MainActivity">
+
+    <ImageView
+        android:id="@+id/main_IMG_background"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+
+        />
 
     <TextView
         android:id="@+id/main_LBL_title"

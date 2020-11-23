@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dreamest.wargame_premium.game.Card;
 import com.dreamest.wargame_premium.R;
 import com.dreamest.wargame_premium.utilities.Utility;
@@ -32,6 +33,8 @@ public class MainActivity extends BaseActivity {
     private TextView main_LBL_rightName;
     private TextView main_LBL_leftName;
     private ProgressBar main_BAR_progress;
+    private ImageView main_IMG_background;
+
     private List<Card> deckOfCards;
     private List<Card> player1Deck;
     private List<Card> player2Deck;
@@ -65,6 +68,7 @@ public class MainActivity extends BaseActivity {
         main_IMG_rightIcon = findViewById(R.id.main_IMG_rightIcon);
         main_IMG_leftIcon = findViewById(R.id.main_IMG_leftIcon);
         main_BAR_progress = findViewById(R.id.main_BAR_progress);
+        main_IMG_background = findViewById(R.id.main_IMG_background);
 
         initGame();
         main_BTN_deal.setOnClickListener(new View.OnClickListener() {
@@ -95,11 +99,9 @@ public class MainActivity extends BaseActivity {
             cardFacingUp = true;
             Card p1Card = player1Deck.get(counter);
             Card p2Card = player2Deck.get(counter);
-            int playerOneID = getResources().getIdentifier(p1Card.getName(), "drawable", getPackageName());
-            int playerTwoID = getResources().getIdentifier(p2Card.getName(), "drawable", getPackageName());
             Utility.playSound(this, R.raw.snd_card_flip);
-            main_IMG_leftCard.setImageResource(playerOneID);
-            main_IMG_rightCard.setImageResource(playerTwoID);
+            main_IMG_leftCard.setImageResource(p1Card.getID(this, counter));
+            main_IMG_rightCard.setImageResource(p2Card.getID(this, counter));
             counter++;
             if (p1Card.compareTo(p2Card) > 0)
                 p1Score++;
@@ -167,6 +169,7 @@ public class MainActivity extends BaseActivity {
 
         p1Score = 0;
         p2Score = 0;
+        Glide.with(this).load(R.drawable.game_background).into(main_IMG_background);
 
         updateSettings();
         updateScore();

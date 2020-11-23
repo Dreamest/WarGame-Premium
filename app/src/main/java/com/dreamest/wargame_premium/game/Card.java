@@ -1,5 +1,7 @@
 package com.dreamest.wargame_premium.game;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class Card implements Comparable<Card>{
     private int value;
     private String suit;
@@ -12,6 +14,11 @@ public class Card implements Comparable<Card>{
         this.drawableName = suit + "_" + valueToWord(value);
     }
 
+    public int getID(AppCompatActivity activity, int counter) {
+        return activity.getResources().getIdentifier(drawableName, "drawable", activity.getPackageName());
+
+    }
+
     private String valueToWord(int value) {
         String words[] = {"two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king", "ace"};
         return words[value + VALUE_OFFSET];
@@ -20,14 +27,6 @@ public class Card implements Comparable<Card>{
     @Override
     public int compareTo(Card other) {
         return this.value - other.value;
-//        if (this.value > other.value)
-//            return 1;
-//        else if (this.value < other.value)
-//            return -1;
-//        return 0;
     }
 
-    public String getName() {
-        return this.drawableName;
-    }
 }
