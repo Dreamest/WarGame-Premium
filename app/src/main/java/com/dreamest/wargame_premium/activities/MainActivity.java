@@ -43,8 +43,9 @@ public class MainActivity extends BaseActivity {
 
     private Timer carousalTimer;
 
-    private final int DELAY = 2000;
+    private final int DELAY = 1000;
     private boolean running;
+    private boolean cardFacingUp;
     //This is a test update to confirm the repository was forked properly. V2
 
     @Override
@@ -71,41 +72,48 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 if (!running) {
                     startAutoPlay();
-                    main_BTN_deal.setBackgroundResource(R.drawable.ic_pause_button);
-                    running = true;
                 } else {
                     stopAutoPlay();
-                    main_BTN_deal.setBackgroundResource(R.drawable.ic_play_button);
-                    running = false;
                 }
             }
         });
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         stopAutoPlay();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
     private void turn() {
-        Card p1Card = player1Deck.get(counter);
-        Card p2Card = player2Deck.get(counter);
-        int playerOneID = getResources().getIdentifier(p1Card.getName(), "drawable", getPackageName());
-        int playerTwoID = getResources().getIdentifier(p2Card.getName(), "drawable", getPackageName());
-        Utility.playSound(this, R.raw.snd_card_flip);
-        main_IMG_leftCard.setImageResource(playerOneID);
-        main_IMG_rightCard.setImageResource(playerTwoID);
-        counter++;
-        if (p1Card.compareTo(p2Card) > 0)
-            p1Score++;
-        else if (p1Card.compareTo(p2Card) < 0)
-            p2Score++;
-        updateScore();
+        if(!cardFacingUp) {
+            cardFacingUp = true;
+            Card p1Card = player1Deck.get(counter);
+            Card p2Card = player2Deck.get(counter);
+            int playerOneID = getResources().getIdentifier(p1Card.getName(), "drawable", getPackageName());
+            int playerTwoID = getResources().getIdentifier(p2Card.getName(), "drawable", getPackageName());
+            Utility.playSound(this, R.raw.snd_card_flip);
+            main_IMG_leftCard.setImageResource(playerOneID);
+            main_IMG_rightCard.setImageResource(playerTwoID);
+            counter++;
+            if (p1Card.compareTo(p2Card) > 0)
+                p1Score++;
+            else if (p1Card.compareTo(p2Card) < 0)
+                p2Score++;
+            updateScore();
+        } else
+            faceDownCards();
+
     }
 
     private void startAutoPlay() {
         carousalTimer = new Timer();
+
         carousalTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -115,24 +123,21 @@ public class MainActivity extends BaseActivity {
                         if (counter == player1Deck.size()) {
                             endMatch();
                             stopAutoPlay();
-                        } else {
+                        } else
                             turn();
-                            carousalTimer.scheduleAtFixedRate(new TimerTask() {
-                                @Override
-                                public void run() {
-                                    faceDownCards();
-                                }
-                            }, 3*DELAY/4, DELAY);
-                        }
 
                     }
                 });
             }
         }, 0, DELAY);
+        main_BTN_deal.setBackgroundResource(R.drawable.ic_pause_button);
+        running = true;
     }
 
     private void stopAutoPlay() {
         carousalTimer.cancel();
+        main_BTN_deal.setBackgroundResource(R.drawable.ic_play_button);
+        running = false;
     }
 
     private void endMatch() {
@@ -172,6 +177,7 @@ public class MainActivity extends BaseActivity {
     private void faceDownCards() {
         main_IMG_leftCard.setImageResource(R.drawable.ic_card_back);
         main_IMG_rightCard.setImageResource(R.drawable.ic_card_back);
+        cardFacingUp = false;
     }
 
     private void updateSettings() {
