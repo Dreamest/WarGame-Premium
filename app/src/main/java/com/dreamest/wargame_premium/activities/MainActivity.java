@@ -121,8 +121,8 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void run() {
                         if (counter == player1Deck.size()) {
-                            endMatch();
                             stopAutoPlay();
+                            endMatch();
                         } else
                             turn();
 
