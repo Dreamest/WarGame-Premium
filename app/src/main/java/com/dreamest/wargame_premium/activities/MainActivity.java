@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dreamest.wargame_premium.game.Card;
 import com.dreamest.wargame_premium.R;
+import com.dreamest.wargame_premium.game.Player;
 import com.dreamest.wargame_premium.utilities.Utility;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,9 +49,16 @@ public class MainActivity extends BaseActivity {
 
     private Timer carousalTimer;
 
-    private final int DELAY = 1000;
+    private final int DELAY = 500;
     private boolean running;
     private boolean cardFacingUp;
+
+    private SharedPreferences settings;
+    private Player leftPlayer, rightPlayer;
+
+    private final String NO_PLAYER_FOUND = "NO_PLAYER_FOUND";
+    public static final String TIE = "It's a tie!\nNobody Wins.";
+
     //This is a test update to confirm the repository was forked properly. V2
 
     @Override
@@ -56,7 +66,10 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        carousalTimer = new Timer();
+
         running = false;
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
 
         main_BTN_deal = findViewById(R.id.main_BTN_deal);
         main_IMG_leftCard = findViewById(R.id.main_IMG_leftCard);
@@ -71,6 +84,7 @@ public class MainActivity extends BaseActivity {
         main_IMG_background = findViewById(R.id.main_IMG_background);
 
         initGame();
+
         main_BTN_deal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,12 +100,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        stopAutoPlay();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        stopAutoPlay();
     }
 
     private void turn() {
@@ -100,8 +114,8 @@ public class MainActivity extends BaseActivity {
             Card p1Card = player1Deck.get(counter);
             Card p2Card = player2Deck.get(counter);
             Utility.playSound(this, R.raw.snd_card_flip);
-            main_IMG_leftCard.setImageResource(p1Card.getID(this, counter));
-            main_IMG_rightCard.setImageResource(p2Card.getID(this, counter));
+            main_IMG_leftCard.setImageResource(p1Card.getId());
+            main_IMG_rightCard.setImageResource(p2Card.getId());
             counter++;
             if (p1Card.compareTo(p2Card) > 0)
                 p1Score++;
@@ -114,8 +128,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void startAutoPlay() {
-        carousalTimer = new Timer();
-
         carousalTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -144,13 +156,14 @@ public class MainActivity extends BaseActivity {
 
     private void endMatch() {
         Intent myIntent = new Intent(this, ResultsActivity.class);
+        Gson gson = new Gson();
         String winner;
         if (p1Score > p2Score)
-            winner = "Left Player Wins!";
+            winner = gson.toJson(leftPlayer);
         else if (p1Score < p2Score)
-            winner = "Right Player Wins!";
+            winner = gson.toJson(rightPlayer);
         else
-            winner = "It's a tie!";
+            winner = TIE;
         if(p1Score - p2Score != 0)
             Utility.playSound(this, R.raw.snd_applause);
         else
@@ -184,24 +197,33 @@ public class MainActivity extends BaseActivity {
     }
 
     private void updateSettings() {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        String s;
-        s = settings.getString(AvatarActivity.PLAYER_1_AVATAR, AvatarActivity.CHARACTER_1);
-        int playerOneID = getResources().getIdentifier(s, "drawable", getPackageName());
-        main_IMG_leftIcon.setImageResource(playerOneID);
-        s = settings.getString(SettingsActivity.PLAYER_1_NAME, "player 1");
-        main_LBL_leftName.setText(s);
+        leftPlayer = LoadPlayer(SettingsActivity.LEFT_PLAYER);
+        main_IMG_leftIcon.setImageResource(leftPlayer.getImageID());
+        main_LBL_leftName.setText(leftPlayer.getName());
 
-        s = settings.getString(AvatarActivity.PLAYER_2_AVATAR, AvatarActivity.CHARACTER_2);
-        int playerTwoID = getResources().getIdentifier(s, "drawable", getPackageName());
-        main_IMG_rightIcon.setImageResource(playerTwoID);
-        s = settings.getString(SettingsActivity.PLAYER_2_NAME, "player 2");
-        main_LBL_rightName.setText(s);
+        rightPlayer = LoadPlayer(SettingsActivity.RIGHT_PLAYER);
+        main_IMG_rightIcon.setImageResource(rightPlayer.getImageID());
+        main_LBL_rightName.setText(rightPlayer.getName());
+    }
+
+    private Player LoadPlayer(String key) {
+        Gson gson = new Gson();
+        String jsonFile = settings.getString(key, NO_PLAYER_FOUND);
+        if (jsonFile.equals(NO_PLAYER_FOUND)) {
+            if(key == SettingsActivity.LEFT_PLAYER)
+                return new Player(R.drawable.ic_character_1, "Left Player");
+            else
+                return new Player(R.drawable.ic_character_2, "Right Player");
+        }
+        return gson.fromJson(jsonFile, Player.class);
+
     }
 
     private void updateScore() {
         main_LBL_leftScore.setText(p1Score + "");
         main_LBL_rightScore.setText(p2Score + "");
+        leftPlayer.setScore(p1Score);
+        rightPlayer.setScore(p2Score);
         main_BAR_progress.setProgress(counter);
     }
 
@@ -220,7 +242,7 @@ public class MainActivity extends BaseActivity {
         deckOfCards = new ArrayList<Card>();
         for (String suit : new String[]{"spades", "clubs", "hearts", "diamonds"}) {
             for (int value = 2; value <= 14; value++) {
-                deckOfCards.add(new Card(value, suit));
+                deckOfCards.add(new Card(value, suit, this));
             }
         }
     }

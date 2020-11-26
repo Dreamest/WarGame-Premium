@@ -5,20 +5,44 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Card implements Comparable<Card>{
     private int value;
     private String suit;
-    private String drawableName;
     private final int VALUE_OFFSET = -2;
+    private int id;
 
     public Card(){};
 
-    public Card(int value, String suit) {
+    public Card(int value, String suit, AppCompatActivity activity) {
         this.value = value;
         this.suit = suit;
-        this.drawableName = suit + "_" + valueToWord(value);
+        this.id = activity.getResources().getIdentifier(suit + "_" + valueToWord(value), "drawable", activity.getPackageName());
+
     }
 
-    public int getID(AppCompatActivity activity, int counter) {
-        return activity.getResources().getIdentifier(drawableName, "drawable", activity.getPackageName());
+    public void setValue(int value) {
+        this.value = value;
+    }
 
+    public void setSuit(String suit) {
+        this.suit = suit;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getSuit() {
+        return suit;
+    }
+
+    public int getVALUE_OFFSET() {
+        return VALUE_OFFSET;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     private String valueToWord(int value) {

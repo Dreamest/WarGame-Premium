@@ -27,9 +27,6 @@ public class OpeningActivity extends BaseActivity {
         opening_BTN_settings = findViewById(R.id.opening_BTN_settings);
         opening_BTN_leaderboard = findViewById(R.id.opening_BTN_leaderboard);
 
-
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-
         opening_BTN_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +70,6 @@ public class OpeningActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        HideUI.hideSystemUI(this);
     }
 
 
