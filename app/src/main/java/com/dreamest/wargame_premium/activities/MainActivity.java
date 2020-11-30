@@ -216,15 +216,19 @@ public class MainActivity extends BaseActivity {
     }
 
     private Player LoadPlayer(String key) {
+        Player p;
         Gson gson = new Gson();
         String jsonFile = settings.getString(key, NO_PLAYER_FOUND);
         if (jsonFile.equals(NO_PLAYER_FOUND)) {
             if(key == SettingsActivity.LEFT_PLAYER)
-                return new Player(R.drawable.ic_character_1, "Left Player");
+                p = new Player(R.drawable.ic_character_1, "Left Player", true);
             else
-                return new Player(R.drawable.ic_character_2, "Right Player");
-        }
-        return gson.fromJson(jsonFile, Player.class);
+                p = new Player(R.drawable.ic_character_2, "Right Player", true);
+        } else
+            p = gson.fromJson(jsonFile, Player.class);
+
+        // TODO: 11/30/20 p.setLocation(currentLocation)
+        return p;
 
     }
 

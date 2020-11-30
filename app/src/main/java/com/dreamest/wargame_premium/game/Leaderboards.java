@@ -20,7 +20,7 @@ public class Leaderboards {
         this.lowestScore = 0;
         players = new ArrayList<>();
         for(int i = 0; i < MAX_SIZE; i++){
-            players.add(new Player(0, ""));
+            players.add(new Player(0, "", false));
         }
 
     }

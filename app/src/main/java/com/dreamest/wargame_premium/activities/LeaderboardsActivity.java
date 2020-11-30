@@ -47,22 +47,24 @@ public class LeaderboardsActivity extends BaseActivity {
             name.setText(p.getName());
             score.setText("" + p.getScore());
 
-            name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openPlayerTab();
-                }
-            });
-            score.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openPlayerTab();
-                }
-            });
+            if(p.isValid()) {
+                name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openPlayerTab(p);
+                    }
+                });
+                score.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openPlayerTab(p);
+                    }
+                });
+            }
         }
     }
 
-    private void openPlayerTab() {
+    private void openPlayerTab(Player p) {
         // TODO: 11/30/20 On click, should open new activity showing the player name, icon, score and location. 
     }
 

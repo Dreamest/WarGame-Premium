@@ -106,8 +106,8 @@ public class SettingsActivity extends BaseActivity {
     private void close() {
         int leftID = Utility.drawableNameToID(this, settings.getString(AvatarActivity.PLAYER_1_AVATAR, AvatarActivity.CHARACTER_1));
         int rightID = Utility.drawableNameToID(this, settings.getString(AvatarActivity.PLAYER_2_AVATAR, AvatarActivity.CHARACTER_2));
-        Player leftPlayer = new Player(leftID, settings_TXT_p1Name.getText().toString());
-        Player rightPlayer = new Player(rightID, settings_TXT_p2Name.getText().toString());
+        Player leftPlayer = new Player(leftID, settings_TXT_p1Name.getText().toString(), true);
+        Player rightPlayer = new Player(rightID, settings_TXT_p2Name.getText().toString(), true);
         Gson gson = new Gson();
         String leftJson = gson.toJson(leftPlayer);
         String rightJson = gson.toJson(rightPlayer);

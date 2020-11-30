@@ -4,13 +4,15 @@ public class Player {
     private int imageID;
     private String name;
     private int score;
+    private boolean valid;
 
     public Player(){};
 
-    public Player(int imageID, String name) {
+    public Player(int imageID, String name, boolean valid) {
         this.imageID = imageID;
         this.name = name;
         this.score = 0;
+        this.valid = valid;
     }
 
     public int getImageID() {
@@ -35,5 +37,14 @@ public class Player {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 }
