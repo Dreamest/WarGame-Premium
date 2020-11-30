@@ -45,12 +45,9 @@ public class MainActivity extends BaseActivity {
     private int p1Score, p2Score;
     private int counter;
 
-    private Handler handler;
-    private Runnable runnable;
-
     private Timer carousalTimer;
 
-    private final int DELAY = 100;
+    private final int DELAY = 500;
     private boolean running;
     private boolean cardFacingUp;
 
