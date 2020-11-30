@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 
 public class ResultsActivity extends BaseActivity {
     private Button results_BTN_restart;
-    private Button results_BTN_exit;
+    private Button results_BTN_MainMenu;
     private TextView results_LBL_winner;
     public static final String EXTRA_KEY_WINNER = "EXTRA_KEY_WINNER";
     public static final String EXTRA_KEY_SCORE = "EXTRA_KEY_SCORE";
@@ -25,15 +25,15 @@ public class ResultsActivity extends BaseActivity {
         setContentView(R.layout.activity_results);
 
         results_BTN_restart = findViewById(R.id.results_BTN_restart);
-        results_BTN_exit = findViewById(R.id.results_BTN_exit);
+        results_BTN_MainMenu = findViewById(R.id.results_BTN_MainMenu);
         results_LBL_winner = findViewById(R.id.results_LBL_winner);
 
-        results_BTN_exit.setOnClickListener(new View.OnClickListener() {
+        results_BTN_MainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.playSound(ResultsActivity.this, R.raw.snd_button_click);
 
-                closeApp();
+                close();
             }
         });
 
@@ -74,7 +74,7 @@ public class ResultsActivity extends BaseActivity {
         finish();
     }
 
-    private void closeApp() {
+    private void close() {
         finish();
     }
 }

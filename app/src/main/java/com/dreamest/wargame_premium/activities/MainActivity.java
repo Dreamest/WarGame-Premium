@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dreamest.wargame_premium.game.Card;
 import com.dreamest.wargame_premium.R;
+import com.dreamest.wargame_premium.game.Leaderboards;
 import com.dreamest.wargame_premium.game.Player;
 import com.dreamest.wargame_premium.utilities.Utility;
 import com.google.gson.Gson;
@@ -49,11 +50,13 @@ public class MainActivity extends BaseActivity {
 
     private Timer carousalTimer;
 
-    private final int DELAY = 500;
+    private final int DELAY = 100;
     private boolean running;
     private boolean cardFacingUp;
 
     private SharedPreferences settings;
+    private SharedPreferences.Editor editor;
+
     private Player leftPlayer, rightPlayer;
 
     private final String NO_PLAYER_FOUND = "NO_PLAYER_FOUND";
@@ -70,6 +73,7 @@ public class MainActivity extends BaseActivity {
 
         running = false;
         settings = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = settings.edit();
 
         main_BTN_deal = findViewById(R.id.main_BTN_deal);
         main_IMG_leftCard = findViewById(R.id.main_IMG_leftCard);
@@ -158,10 +162,18 @@ public class MainActivity extends BaseActivity {
         Intent myIntent = new Intent(this, ResultsActivity.class);
         Gson gson = new Gson();
         String winner;
-        if (p1Score > p2Score)
+        Leaderboards leaderboards = gson.fromJson(settings.getString(Leaderboards.LEADERBOARDS_KEY, Leaderboards.NO_LEADERBOARDS), Leaderboards.class);
+
+        if (p1Score > p2Score){
             winner = gson.toJson(leftPlayer);
-        else if (p1Score < p2Score)
+            if(leftPlayer.getScore() > leaderboards.getLowestScore())
+                leaderboards.updateLeaderboards(leftPlayer);
+        }
+        else if (p1Score < p2Score){
             winner = gson.toJson(rightPlayer);
+            if(rightPlayer.getScore() > leaderboards.getLowestScore())
+                leaderboards.updateLeaderboards(rightPlayer);
+        }
         else
             winner = TIE;
         if(p1Score - p2Score != 0)
@@ -169,6 +181,8 @@ public class MainActivity extends BaseActivity {
         else
             Utility.playSound(this, R.raw.snd_awww);
 
+        editor.putString(Leaderboards.LEADERBOARDS_KEY, gson.toJson(leaderboards));
+        editor.apply();
         myIntent.putExtra(ResultsActivity.EXTRA_KEY_SCORE, Math.max(p1Score, p2Score));
         myIntent.putExtra(ResultsActivity.EXTRA_KEY_WINNER, winner);
         startActivity(myIntent);
@@ -250,6 +264,5 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        HideUI.hideSystemUI(this); //Credit : https://developer.android.com/training/system-ui/immersive#java
     }
 }
