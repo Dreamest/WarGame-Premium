@@ -82,11 +82,4 @@ public class OpeningActivity extends BaseActivity {
         Intent myIntent = new Intent(this, MainActivity.class);
         startActivity(myIntent);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-
 }

@@ -68,11 +68,6 @@ public class AvatarActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        HideUI.hideSystemUI(this);
-    }
 
     private void chooseAvatar(int currentPlayer, String characterIconID, SharedPreferences.Editor editor) {
         if(currentPlayer == 1)

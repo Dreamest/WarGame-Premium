@@ -63,11 +63,6 @@ public class ResultsActivity extends BaseActivity {
     private void updateLeaderboards(Player player) {
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     private void restartGame() {
         Intent myIntent = new Intent(this, MainActivity.class);
         startActivity(myIntent);

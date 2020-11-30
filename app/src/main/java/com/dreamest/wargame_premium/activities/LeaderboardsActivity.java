@@ -67,12 +67,4 @@ public class LeaderboardsActivity extends BaseActivity {
     private void openPlayerTab(Player p) {
         // TODO: 11/30/20 On click, should open new activity showing the player name, icon, score and location. 
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-
-
 }
