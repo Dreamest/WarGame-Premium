@@ -37,7 +37,6 @@ public class Leaderboards {
         return LEADERBOARDS_KEY;
     }
 
-
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -54,7 +53,6 @@ public class Leaderboards {
         this.lowestScore = lowestScore;
     }
 
-
     private int compareScore(Player p1, Player p2) {
         return p2.getScore() - p1.getScore();
     }
@@ -65,7 +63,5 @@ public class Leaderboards {
         if(players.size() > MAX_SIZE)
             players.remove(MAX_SIZE);
         lowestScore = players.get(MAX_SIZE -1).getScore();
-
-
     }
 }
