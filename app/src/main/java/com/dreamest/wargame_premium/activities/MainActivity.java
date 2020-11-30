@@ -59,8 +59,6 @@ public class MainActivity extends BaseActivity {
     private final String NO_PLAYER_FOUND = "NO_PLAYER_FOUND";
     public static final String TIE = "It's a tie!\nNobody Wins.";
 
-    //This is a test update to confirm the repository was forked properly. V2
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

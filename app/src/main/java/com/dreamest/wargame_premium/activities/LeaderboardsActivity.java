@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
@@ -45,7 +46,24 @@ public class LeaderboardsActivity extends BaseActivity {
             Player p = leaderboards.getPlayers().get(i);
             name.setText(p.getName());
             score.setText("" + p.getScore());
+
+            name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openPlayerTab();
+                }
+            });
+            score.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openPlayerTab();
+                }
+            });
         }
+    }
+
+    private void openPlayerTab() {
+        // TODO: 11/30/20 On click, should open new activity showing the player name, icon, score and location. 
     }
 
     @Override
