@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dreamest.wargame_premium.R;
+import com.dreamest.wargame_premium.game.GameManager;
 import com.dreamest.wargame_premium.game.Player;
 import com.dreamest.wargame_premium.utilities.Utility;
 import com.google.gson.Gson;
@@ -47,9 +48,9 @@ public class ResultsActivity extends BaseActivity {
 
         String result = getIntent().getStringExtra(EXTRA_KEY_WINNER);
         String winner;
-        if(result.equals(MainActivity.TIE))
+        if (result.equals(GameManager.TIE))
             winner = result;
-        else{
+        else {
             Gson gson = new Gson();
             Player player = gson.fromJson(result, Player.class);
             winner = player.getName();

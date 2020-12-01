@@ -3,9 +3,7 @@ package com.dreamest.wargame_premium.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,16 +11,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.dreamest.wargame_premium.game.Card;
 import com.dreamest.wargame_premium.R;
+import com.dreamest.wargame_premium.game.GameManager;
 import com.dreamest.wargame_premium.game.Leaderboards;
-import com.dreamest.wargame_premium.game.Player;
 import com.dreamest.wargame_premium.utilities.Utility;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -39,30 +33,22 @@ public class MainActivity extends BaseActivity {
     private ProgressBar main_BAR_progress;
     private ImageView main_IMG_background;
 
-    private List<Card> deckOfCards;
-    private List<Card> player1Deck;
-    private List<Card> player2Deck;
-    private int p1Score, p2Score;
-    private int counter;
+    private final int DELAY = 1000;
 
     private Timer carousalTimer;
-
-    private final int DELAY = 500;
+    private GameManager gm;
     private boolean running;
     private boolean cardFacingUp;
 
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
 
-    private Player leftPlayer, rightPlayer;
-
-    private final String NO_PLAYER_FOUND = "NO_PLAYER_FOUND";
-    public static final String TIE = "It's a tie!\nNobody Wins.";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        gm = new GameManager(this);
 
         carousalTimer = new Timer();
 
@@ -81,7 +67,6 @@ public class MainActivity extends BaseActivity {
         main_IMG_leftIcon = findViewById(R.id.main_IMG_leftIcon);
         main_BAR_progress = findViewById(R.id.main_BAR_progress);
         main_IMG_background = findViewById(R.id.main_IMG_background);
-
         initGame();
 
         main_BTN_deal.setOnClickListener(new View.OnClickListener() {
@@ -97,33 +82,22 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
-        stopAutoPlay();
+        if (running)
+            stopAutoPlay();
     }
 
     private void turn() {
         if(!cardFacingUp) {
+            gm.play();
             cardFacingUp = true;
-            Card p1Card = player1Deck.get(counter);
-            Card p2Card = player2Deck.get(counter);
             Utility.playSound(this, R.raw.snd_card_flip);
-            main_IMG_leftCard.setImageResource(p1Card.getId());
-            main_IMG_rightCard.setImageResource(p2Card.getId());
-            counter++;
-            if (p1Card.compareTo(p2Card) > 0)
-                p1Score++;
-            else if (p1Card.compareTo(p2Card) < 0)
-                p2Score++;
+            main_IMG_leftCard.setImageResource(gm.getLeftCard().getId());
+            main_IMG_rightCard.setImageResource(gm.getRightCard().getId());
             updateScore();
         } else
             faceDownCards();
-
     }
 
     private void startAutoPlay() {
@@ -133,12 +107,11 @@ public class MainActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (counter == player1Deck.size()) {
+                        if (gm.getCounter() == gm.DECK_SIZE) {
                             stopAutoPlay();
                             endMatch();
                         } else
                             turn();
-
                     }
                 });
             }
@@ -159,26 +132,15 @@ public class MainActivity extends BaseActivity {
         String winner;
         Leaderboards leaderboards = gson.fromJson(settings.getString(Leaderboards.LEADERBOARDS_KEY, Leaderboards.NO_LEADERBOARDS), Leaderboards.class);
 
-        if (p1Score > p2Score){
-            winner = gson.toJson(leftPlayer);
-            if(leftPlayer.getScore() > leaderboards.getLowestScore())
-                leaderboards.updateLeaderboards(leftPlayer);
-        }
-        else if (p1Score < p2Score){
-            winner = gson.toJson(rightPlayer);
-            if(rightPlayer.getScore() > leaderboards.getLowestScore())
-                leaderboards.updateLeaderboards(rightPlayer);
-        }
-        else
-            winner = TIE;
-        if(p1Score - p2Score != 0)
-            Utility.playSound(this, R.raw.snd_applause);
-        else
+        winner = gm.determineWinner(leaderboards);
+        if (winner.equals(GameManager.TIE))
             Utility.playSound(this, R.raw.snd_awww);
+        else
+            Utility.playSound(this, R.raw.snd_applause);
 
         editor.putString(Leaderboards.LEADERBOARDS_KEY, gson.toJson(leaderboards));
         editor.apply();
-        myIntent.putExtra(ResultsActivity.EXTRA_KEY_SCORE, Math.max(p1Score, p2Score));
+        myIntent.putExtra(ResultsActivity.EXTRA_KEY_SCORE, Math.max(gm.getRightPlayer().getScore(), gm.getLeftPlayer().getScore()));
         myIntent.putExtra(ResultsActivity.EXTRA_KEY_WINNER, winner);
         startActivity(myIntent);
         finish();
@@ -188,15 +150,9 @@ public class MainActivity extends BaseActivity {
     private void initGame() {
         main_BTN_deal.setBackgroundResource(R.drawable.ic_play_button);
         faceDownCards();
-
-        p1Score = 0;
-        p2Score = 0;
         Glide.with(this).load(R.drawable.game_background).into(main_IMG_background);
-
-        updateSettings();
+        updatePlayerInfo();
         updateScore();
-        create_deck();
-        dealCards();
     }
 
     private void faceDownCards() {
@@ -205,58 +161,18 @@ public class MainActivity extends BaseActivity {
         cardFacingUp = false;
     }
 
-    private void updateSettings() {
-        leftPlayer = LoadPlayer(SettingsActivity.LEFT_PLAYER);
-        main_IMG_leftIcon.setImageResource(leftPlayer.getImageID());
-        main_LBL_leftName.setText(leftPlayer.getName());
+    private void updatePlayerInfo() {
+        main_IMG_leftIcon.setImageResource(gm.getLeftPlayer().getImageID());
+        main_LBL_leftName.setText(gm.getLeftPlayer().getName());
 
-        rightPlayer = LoadPlayer(SettingsActivity.RIGHT_PLAYER);
-        main_IMG_rightIcon.setImageResource(rightPlayer.getImageID());
-        main_LBL_rightName.setText(rightPlayer.getName());
-    }
-
-    private Player LoadPlayer(String key) {
-        Player p;
-        Gson gson = new Gson();
-        String jsonFile = settings.getString(key, NO_PLAYER_FOUND);
-        if (jsonFile.equals(NO_PLAYER_FOUND)) {
-            if(key == SettingsActivity.LEFT_PLAYER)
-                p = new Player(R.drawable.ic_character_1, "Left Player", true);
-            else
-                p = new Player(R.drawable.ic_character_2, "Right Player", true);
-        } else
-            p = gson.fromJson(jsonFile, Player.class);
-
-        // TODO: 11/30/20 p.setLocation(currentLocation)
-        return p;
-
+        main_IMG_rightIcon.setImageResource(gm.getRightPlayer().getImageID());
+        main_LBL_rightName.setText(gm.getRightPlayer().getName());
     }
 
     private void updateScore() {
-        main_LBL_leftScore.setText(p1Score + "");
-        main_LBL_rightScore.setText(p2Score + "");
-        leftPlayer.setScore(p1Score);
-        rightPlayer.setScore(p2Score);
-        main_BAR_progress.setProgress(counter);
-    }
+        main_LBL_leftScore.setText(gm.getLeftPlayer().getScore() + "");
+        main_LBL_rightScore.setText(gm.getRightPlayer().getScore() + "");
 
-    private void dealCards() {
-        Collections.shuffle(deckOfCards);
-        int halfSize = deckOfCards.size() / 2;
-        player1Deck = new ArrayList<>(deckOfCards.subList(0, halfSize));
-        player2Deck = new ArrayList<>(deckOfCards.subList(halfSize, deckOfCards.size()));
-
-        //Shuffling again just for kicks.
-        Collections.shuffle(player1Deck);
-        Collections.shuffle(player2Deck);
-    }
-
-    private void create_deck() {
-        deckOfCards = new ArrayList<Card>();
-        for (String suit : new String[]{"spades", "clubs", "hearts", "diamonds"}) {
-            for (int value = 2; value <= 14; value++) {
-                deckOfCards.add(new Card(value, suit, this));
-            }
-        }
+        main_BAR_progress.setProgress(gm.getCounter());
     }
 }
