@@ -6,7 +6,7 @@ public class Card implements Comparable<Card>{
     private int value;
     private String suit;
     private final int VALUE_OFFSET = -2;
-    private int id;
+    private int id; //todo: remove this
 
     public Card(){};
 

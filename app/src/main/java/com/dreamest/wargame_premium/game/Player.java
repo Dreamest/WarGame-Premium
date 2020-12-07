@@ -1,7 +1,7 @@
 package com.dreamest.wargame_premium.game;
 
 public class Player {
-    private int imageID;
+    private int imageID; // todo: remove this
     private String name;
     private int score;
     private boolean valid;
