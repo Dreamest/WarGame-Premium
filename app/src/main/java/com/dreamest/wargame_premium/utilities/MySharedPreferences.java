@@ -23,7 +23,7 @@ public class MySharedPreferences {
             msp = new MySharedPreferences(context);
     }
 
-    public MySharedPreferences getMsp() {
+    public static MySharedPreferences getMsp() {
         return msp;
     }
 
@@ -82,6 +82,13 @@ public class MySharedPreferences {
     public interface KEYS {
         public static final String MY_SP = "MY_SP";
         public static final String NO_OBJECT = "NO_OBJECT";
+        public static final String PLAYER_LEFT_AVATAR = "PLAYER_LEFT_AVATAR";
+        public static final String PLAYER_RIGHT_AVATAR = "PLAYER_RIGHT_AVATAR";
+        public static final String LEADERBOARDS_KEY = "LEADERBOARDS_KEY";
+        public static final String PLAYER_LEFT_NAME = "PLAYER_LEFT_NAME";
+        public static final String PLAYER_RIGHT_NAME = "PLAYER_RIGHT_NAME";
+        public static final String LEFT_PLAYER = "LEFT_PLAYER";
+        public static final String RIGHT_PLAYER = "RIGHT_PLAYER";
 
     }
 

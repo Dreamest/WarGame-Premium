@@ -1,12 +1,9 @@
 package com.dreamest.wargame_premium.game;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dreamest.wargame_premium.R;
-import com.dreamest.wargame_premium.activities.SettingsActivity;
+import com.dreamest.wargame_premium.utilities.MySharedPreferences;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -25,8 +22,8 @@ public class GameManager {
 
 
     public GameManager(AppCompatActivity activity) {
-        leftPlayer = loadPlayer(SettingsActivity.LEFT_PLAYER, activity);
-        rightPlayer = loadPlayer(SettingsActivity.RIGHT_PLAYER, activity);
+        leftPlayer = loadPlayer(MySharedPreferences.KEYS.LEFT_PLAYER, activity);
+        rightPlayer = loadPlayer(MySharedPreferences.KEYS.RIGHT_PLAYER, activity);
         leftPlayer.setScore(0);
         rightPlayer.setScore(0);
         createDecks(activity);
@@ -60,23 +57,9 @@ public class GameManager {
     }
 
     private Player loadPlayer(String key, AppCompatActivity activity) {
-
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity);
-        SharedPreferences.Editor editor = settings.edit();
-        Player p;
-        Gson gson = new Gson();
-        String jsonFile = settings.getString(key, NO_PLAYER_FOUND);
-        if (jsonFile.equals(NO_PLAYER_FOUND)) {
-            if (key == SettingsActivity.LEFT_PLAYER)
-                p = new Player(R.drawable.ic_character_1, "Left Player", true);
-            else
-                p = new Player(R.drawable.ic_character_2, "Right Player", true);
-        } else
-            p = gson.fromJson(jsonFile, Player.class);
-
-        // TODO: 11/30/20 p.setLocation(currentLocation)
-        return p;
-
+        if (key.equals(MySharedPreferences.KEYS.LEFT_PLAYER))
+            return (Player) MySharedPreferences.getMsp().getObject(key, new Player(R.drawable.ic_character_1, "Left Player", true));
+        return (Player) MySharedPreferences.getMsp().getObject(key, new Player(R.drawable.ic_character_2, "Right Player", true));
     }
 
     public List<Card> getLeftDeck() {

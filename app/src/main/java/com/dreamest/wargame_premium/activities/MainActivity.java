@@ -1,9 +1,7 @@
 package com.dreamest.wargame_premium.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.dreamest.wargame_premium.R;
 import com.dreamest.wargame_premium.game.GameManager;
 import com.dreamest.wargame_premium.game.Leaderboards;
+import com.dreamest.wargame_premium.utilities.MySharedPreferences;
 import com.dreamest.wargame_premium.utilities.Utility;
 import com.google.gson.Gson;
 
@@ -40,9 +39,6 @@ public class MainActivity extends BaseActivity {
     private boolean running;
     private boolean cardFacingUp;
 
-    private SharedPreferences settings;
-    private SharedPreferences.Editor editor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +46,7 @@ public class MainActivity extends BaseActivity {
 
         gm = new GameManager(this);
 
-        carousalTimer = new Timer();
-
         running = false;
-        settings = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = settings.edit();
 
         main_BTN_deal = findViewById(R.id.main_BTN_deal);
         main_IMG_leftCard = findViewById(R.id.main_IMG_leftCard);
@@ -73,6 +65,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (!running) {
+                    running = true;
                     startAutoPlay();
                 } else {
                     stopAutoPlay();
@@ -101,6 +94,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void startAutoPlay() {
+        carousalTimer = new Timer();
         carousalTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -117,29 +111,29 @@ public class MainActivity extends BaseActivity {
             }
         }, 0, DELAY);
         main_BTN_deal.setBackgroundResource(R.drawable.ic_pause_button);
-        running = true;
     }
 
     private void stopAutoPlay() {
-        carousalTimer.cancel();
-        main_BTN_deal.setBackgroundResource(R.drawable.ic_play_button);
-        running = false;
+        if (carousalTimer != null) {
+            carousalTimer.cancel();
+            main_BTN_deal.setBackgroundResource(R.drawable.ic_play_button);
+            running = false;
+        }
     }
 
     private void endMatch() {
         Intent myIntent = new Intent(this, ResultsActivity.class);
         Gson gson = new Gson();
         String winner;
-        Leaderboards leaderboards = gson.fromJson(settings.getString(Leaderboards.LEADERBOARDS_KEY, Leaderboards.NO_LEADERBOARDS), Leaderboards.class);
+        Leaderboards leaderboards = (Leaderboards) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, new Leaderboards());
+        winner = gm.determineWinner(leaderboards); //Also updates the leaderboards
+        MySharedPreferences.getMsp().putObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, leaderboards);
 
-        winner = gm.determineWinner(leaderboards);
         if (winner.equals(GameManager.TIE))
             Utility.playSound(this, R.raw.snd_awww);
         else
             Utility.playSound(this, R.raw.snd_applause);
 
-        editor.putString(Leaderboards.LEADERBOARDS_KEY, gson.toJson(leaderboards));
-        editor.apply();
         myIntent.putExtra(ResultsActivity.EXTRA_KEY_SCORE, Math.max(gm.getRightPlayer().getScore(), gm.getLeftPlayer().getScore()));
         myIntent.putExtra(ResultsActivity.EXTRA_KEY_WINNER, winner);
         startActivity(myIntent);

@@ -1,10 +1,7 @@
 package com.dreamest.wargame_premium.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,72 +10,63 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.dreamest.wargame_premium.R;
 import com.dreamest.wargame_premium.game.Player;
 import com.dreamest.wargame_premium.utilities.HideUI;
-import com.dreamest.wargame_premium.R;
+import com.dreamest.wargame_premium.utilities.MySharedPreferences;
 import com.dreamest.wargame_premium.utilities.Utility;
-import com.google.gson.Gson;
 
 public class SettingsActivity extends BaseActivity {
 
-    private EditText settings_TXT_p1Name;
-    private EditText settings_TXT_p2Name;
-    private ImageButton settings_BTN_p1Avatar;
-    private ImageButton settings_BTN_p2Avatar;
+    private EditText settings_TXT_leftName;
+    private EditText settings_TXT_rightName;
+    private ImageButton settings_BTN_leftAvatar;
+    private ImageButton settings_BTN_rightAvatar;
     private Button settings_BTN_return;
-
-    public static final String PLAYER_1_NAME = "PLAYER_1_NAME";
-    public static final String PLAYER_2_NAME = "PLAYER_2_NAME";
-
-    public static final String LEFT_PLAYER = "LEFT_PLAYER";
-    public static final String RIGHT_PLAYER = "RIGHT_PLAYER";
-
-    private SharedPreferences settings;
-    private SharedPreferences.Editor editor;
-
+    private Player leftPlayer, rightPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        settings_TXT_p1Name = findViewById(R.id.settings_TXT_p1Name);
-        settings_TXT_p2Name = findViewById(R.id.settings_TXT_p2Name);
-        settings_BTN_p1Avatar = findViewById(R.id.settings_BTN_p1Avatar);
-        settings_BTN_p2Avatar = findViewById(R.id.settings_BTN_p2Avatar);
+        settings_TXT_leftName = findViewById(R.id.settings_TXT_leftName);
+        settings_TXT_rightName = findViewById(R.id.settings_TXT_rightName);
+        settings_BTN_leftAvatar = findViewById(R.id.settings_BTN_leftAvatar);
+        settings_BTN_rightAvatar = findViewById(R.id.settings_BTN_rightAvatar);
         settings_BTN_return = findViewById(R.id.settings_BTN_return);
 
-        settings = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = settings.edit();
+        leftPlayer = (Player) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.LEFT_PLAYER, new Player(R.drawable.ic_character_1, "", true));
+        rightPlayer = (Player) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.RIGHT_PLAYER, new Player(R.drawable.ic_character_2, "", true));
 
-        settings_TXT_p1Name.setText(settings.getString(PLAYER_1_NAME, ""));
-        settings_TXT_p2Name.setText(settings.getString(PLAYER_2_NAME, ""));
+        settings_TXT_leftName.setText(leftPlayer.getName());
+        settings_TXT_rightName.setText(rightPlayer.getName());
 
 
-        settings_TXT_p1Name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        settings_TXT_leftName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId== EditorInfo.IME_ACTION_DONE){
-                    settings_TXT_p1Name.clearFocus();
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    settings_TXT_leftName.clearFocus();
                     HideUI.hideSystemUI(SettingsActivity.this);
                 }
                 return false;
             }
         });
 
-        settings_TXT_p2Name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        settings_TXT_rightName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId== EditorInfo.IME_ACTION_DONE){
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
 
-                    settings_TXT_p2Name.clearFocus();
+                    settings_TXT_rightName.clearFocus();
                     HideUI.hideSystemUI(SettingsActivity.this);
                 }
                 return false;
             }
         });
 
-        settings_BTN_p1Avatar.setOnClickListener(new View.OnClickListener() {
+        settings_BTN_leftAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.playSound(SettingsActivity.this, R.raw.snd_button_click);
@@ -86,7 +74,7 @@ public class SettingsActivity extends BaseActivity {
 
             }
         });
-        settings_BTN_p2Avatar.setOnClickListener(new View.OnClickListener() {
+        settings_BTN_rightAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.playSound(SettingsActivity.this, R.raw.snd_button_click);
@@ -104,20 +92,22 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void close() {
-        int leftID = Utility.drawableNameToID(this, settings.getString(AvatarActivity.PLAYER_1_AVATAR, AvatarActivity.CHARACTER_1));
-        int rightID = Utility.drawableNameToID(this, settings.getString(AvatarActivity.PLAYER_2_AVATAR, AvatarActivity.CHARACTER_2));
-        Player leftPlayer = new Player(leftID, settings_TXT_p1Name.getText().toString(), true);
-        Player rightPlayer = new Player(rightID, settings_TXT_p2Name.getText().toString(), true);
-        Gson gson = new Gson();
-        String leftJson = gson.toJson(leftPlayer);
-        String rightJson = gson.toJson(rightPlayer);
+        int leftID = Utility.drawableNameToID(this, MySharedPreferences.getMsp().getString(MySharedPreferences.KEYS.PLAYER_LEFT_AVATAR, AvatarActivity.CHARACTER_1));
+        int rightID = Utility.drawableNameToID(this, MySharedPreferences.getMsp().getString(MySharedPreferences.KEYS.PLAYER_RIGHT_AVATAR, AvatarActivity.CHARACTER_2));
 
-        editor.putString(LEFT_PLAYER, leftJson);
-        editor.putString(RIGHT_PLAYER, rightJson);
-        editor.apply();
+        Player leftPlayer = new Player(leftID, settings_TXT_leftName.getText().toString(), true);
+        Player rightPlayer = new Player(rightID, settings_TXT_rightName.getText().toString(), true);
+
+        MySharedPreferences.getMsp().putObject(MySharedPreferences.KEYS.LEFT_PLAYER, leftPlayer);
+        MySharedPreferences.getMsp().putObject(MySharedPreferences.KEYS.RIGHT_PLAYER, rightPlayer);
 
         finish();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        close();
     }
 
     private void openAvatarMenu(int playerNumber) {
@@ -134,11 +124,7 @@ public class SettingsActivity extends BaseActivity {
 
 
     private void updateAvatars() {
-        String s;
-        s = settings.getString(AvatarActivity.PLAYER_1_AVATAR, AvatarActivity.CHARACTER_1);
-        settings_BTN_p1Avatar.setBackgroundResource(Utility.drawableNameToID(this, s));
-
-        s = settings.getString(AvatarActivity.PLAYER_2_AVATAR, AvatarActivity.CHARACTER_2);
-        settings_BTN_p2Avatar.setBackgroundResource(Utility.drawableNameToID(this, s));
+        settings_BTN_leftAvatar.setBackgroundResource(Utility.drawableNameToID(this, MySharedPreferences.getMsp().getString(MySharedPreferences.KEYS.PLAYER_LEFT_AVATAR, AvatarActivity.CHARACTER_1)));
+        settings_BTN_rightAvatar.setBackgroundResource(Utility.drawableNameToID(this, MySharedPreferences.getMsp().getString(MySharedPreferences.KEYS.PLAYER_RIGHT_AVATAR, AvatarActivity.CHARACTER_2)));
     }
 }
