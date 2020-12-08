@@ -24,15 +24,14 @@
             android:layout_height="match_parent"
             android:layout_margin="12dp"
             android:layout_weight="0.8"
-            android:background="#FFFFFF" />
+            />
 
         <FrameLayout
             android:id="@+id/leaderboards_lay_map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="12dp"
-            android:layout_weight="1"
-            android:background="#FFFFFF" />
+            android:layout_weight="1" />
     </LinearLayout>
 
 </LinearLayout>

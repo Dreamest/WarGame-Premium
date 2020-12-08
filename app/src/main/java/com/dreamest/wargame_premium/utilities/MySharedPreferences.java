@@ -2,6 +2,7 @@ package com.dreamest.wargame_premium.utilities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -76,6 +77,7 @@ public class MySharedPreferences {
         String objectJson = getString(key, KEYS.NO_OBJECT);
         if (objectJson.equals(KEYS.NO_OBJECT))
             return defaultValue;
+        Log.d("dddd", objectJson);
         return gson.fromJson(objectJson, defaultValue.getClass());
     }
 

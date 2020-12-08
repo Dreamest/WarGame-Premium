@@ -18,8 +18,6 @@ public class Leaderboards {
         }
 
     }
-
-
     public static int getMaxSize() {
         return MAX_SIZE;
     }
