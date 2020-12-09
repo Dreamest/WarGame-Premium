@@ -5,4 +5,5 @@
     <string name="player_1_name">Player 1 Name</string>
     <string name="player_2_name">Player 2 Name</string>
     <string name="return_button">return</string>
+    <string name="title_activity_map_fragment">Map</string>
 </resources>
