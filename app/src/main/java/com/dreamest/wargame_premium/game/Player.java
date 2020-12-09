@@ -79,5 +79,6 @@ public class Player {
         } else {
             gpsTracker.showSettingsAlert();
         }
+        gpsTracker.stopUsingGPS();
     }
 }
