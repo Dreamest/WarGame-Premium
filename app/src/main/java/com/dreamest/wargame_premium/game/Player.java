@@ -15,8 +15,6 @@ public class Player {
     public Player() {
     }
 
-    ;
-
     public Player(int imageID, String name, boolean valid) {
         this.imageID = imageID;
         this.name = name;
