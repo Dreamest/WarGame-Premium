@@ -22,6 +22,12 @@ public class OpeningActivity extends BaseActivity {
         opening_BTN_settings = findViewById(R.id.opening_BTN_settings);
         opening_BTN_leaderboard = findViewById(R.id.opening_BTN_leaderboard);
 
+
+        //Enable these lines to clear data from the app.
+//        Log.d("dddd", "WARNING - DATA REMOVER ACTIVE");
+//        MySharedPreferences.getMsp().resetData();
+
+
         opening_BTN_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

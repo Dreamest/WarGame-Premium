@@ -2,7 +2,6 @@ package com.dreamest.wargame_premium.utilities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -31,6 +30,10 @@ public class MySharedPreferences {
     public void removeKey(String key) {
         editor.remove(key);
         editor.apply();
+    }
+
+    public void resetData() {
+        editor.clear().apply();
     }
 
     public void putString(String key, String value) {
@@ -77,7 +80,6 @@ public class MySharedPreferences {
         String objectJson = getString(key, KEYS.NO_OBJECT);
         if (objectJson.equals(KEYS.NO_OBJECT))
             return defaultValue;
-        Log.d("dddd", objectJson);
         return gson.fromJson(objectJson, defaultValue.getClass());
     }
 
@@ -91,6 +93,7 @@ public class MySharedPreferences {
         public static final String PLAYER_RIGHT_NAME = "PLAYER_RIGHT_NAME";
         public static final String LEFT_PLAYER = "LEFT_PLAYER";
         public static final String RIGHT_PLAYER = "RIGHT_PLAYER";
+        public static final String WINNER = "WINNER";
 
     }
 

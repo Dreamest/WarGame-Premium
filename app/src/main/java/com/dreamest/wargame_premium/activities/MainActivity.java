@@ -1,6 +1,8 @@
 package com.dreamest.wargame_premium.activities;
 
+
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -8,13 +10,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 import com.dreamest.wargame_premium.R;
 import com.dreamest.wargame_premium.game.GameManager;
 import com.dreamest.wargame_premium.game.Leaderboards;
+import com.dreamest.wargame_premium.game.Player;
 import com.dreamest.wargame_premium.utilities.MySharedPreferences;
 import com.dreamest.wargame_premium.utilities.Utility;
-import com.google.gson.Gson;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,12 +37,13 @@ public class MainActivity extends BaseActivity {
     private ProgressBar main_BAR_progress;
     private ImageView main_IMG_background;
 
-    private final int DELAY = 1000;
+    private final int DELAY = 200;
 
     private Timer carousalTimer;
     private GameManager gm;
     private boolean running;
     private boolean cardFacingUp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +78,16 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+
+        try {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     protected void onStop() {
@@ -82,7 +97,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void turn() {
-        if(!cardFacingUp) {
+        if (!cardFacingUp) {
             gm.play();
             cardFacingUp = true;
             Utility.playSound(this, R.raw.snd_card_flip);
@@ -123,23 +138,27 @@ public class MainActivity extends BaseActivity {
 
     private void endMatch() {
         Intent myIntent = new Intent(this, ResultsActivity.class);
-        Gson gson = new Gson();
-        String winner;
-        Leaderboards leaderboards = (Leaderboards) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, new Leaderboards());
-        winner = gm.determineWinner(leaderboards); //Also updates the leaderboards
-        MySharedPreferences.getMsp().putObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, leaderboards);
-
-        if (winner.equals(GameManager.TIE))
-            Utility.playSound(this, R.raw.snd_awww);
-        else
+        Player winner = gm.determineWinner();
+        if (winner != null) {
+            winner.updateLocation(this);
+            Leaderboards leaderboards = (Leaderboards) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, new Leaderboards());
+            leaderboards.updateLeaderboards(winner);
+            MySharedPreferences.getMsp().putObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, leaderboards);
             Utility.playSound(this, R.raw.snd_applause);
-
+            myIntent.putExtra(ResultsActivity.EXTRA_KEY_WINNER, winner.getName());
+        } else {
+            Utility.playSound(this, R.raw.snd_awww);
+            myIntent.putExtra(ResultsActivity.EXTRA_KEY_WINNER, GameManager.TIE);
+        }
         myIntent.putExtra(ResultsActivity.EXTRA_KEY_SCORE, Math.max(gm.getRightPlayer().getScore(), gm.getLeftPlayer().getScore()));
-        myIntent.putExtra(ResultsActivity.EXTRA_KEY_WINNER, winner);
         startActivity(myIntent);
         finish();
     }
 
+//
+//    public void updateLocation(Player winner){
+//
+//    }
 
     private void initGame() {
         main_BTN_deal.setBackgroundResource(R.drawable.ic_play_button);
@@ -169,4 +188,5 @@ public class MainActivity extends BaseActivity {
 
         main_BAR_progress.setProgress(gm.getCounter());
     }
+
 }

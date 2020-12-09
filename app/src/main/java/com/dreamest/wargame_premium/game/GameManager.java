@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dreamest.wargame_premium.R;
 import com.dreamest.wargame_premium.utilities.MySharedPreferences;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -126,20 +125,16 @@ public class GameManager {
         return DECK_SIZE;
     }
 
-    public String determineWinner(Leaderboards leaderboards) {
-        String winner;
-        Gson gson = new Gson();
-        if (leftPlayer.getScore() > rightPlayer.getScore()) {
-            winner = gson.toJson(leftPlayer);
-            if (leftPlayer.getScore() > leaderboards.getLowestScore())
-                leaderboards.updateLeaderboards(leftPlayer);
-        } else if (leftPlayer.getScore() < rightPlayer.getScore()) {
-            winner = gson.toJson(rightPlayer);
-            if (rightPlayer.getScore() > leaderboards.getLowestScore())
-                leaderboards.updateLeaderboards(rightPlayer);
-        } else
-            winner = TIE;
-
-        return winner;
+    /**
+     * Determines the game winner
+     *
+     * @return winning player in case of a victory, null if draw
+     */
+    public Player determineWinner() {
+        if (leftPlayer.getScore() > rightPlayer.getScore())
+            return leftPlayer;
+        else if (leftPlayer.getScore() < rightPlayer.getScore())
+            return rightPlayer;
+        return null;
     }
 }
