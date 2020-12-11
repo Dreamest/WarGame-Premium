@@ -25,4 +25,9 @@ Clicking replay will allow to start the game again with the same settings, main 
 ![Leaderboards](https://i.ibb.co/BTbYyS4/4ba7a27a-0eb3-4645-9f0c-c18f1725e95c.jpg)
 Entering the leaderboards leads us to this screen, in which two fragments exists, one holds the top-10 leaderboards and the other a map with the locations of those players. Clicking on a valid line in the leaderboards will make the map focus and zoom on that player's location.
 
+# Features:
+- The app plays audio files on button presses, turns and map interactions.
+- The game itself is run automatically using multithreading.
+- Data is stored between runs, the leaderboards and player information is saved between plays.
+
 
