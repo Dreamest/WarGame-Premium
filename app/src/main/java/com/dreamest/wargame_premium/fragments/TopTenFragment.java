@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.dreamest.wargame_premium.MapCallback;
 import com.dreamest.wargame_premium.R;
 import com.dreamest.wargame_premium.game.Leaderboards;
 import com.dreamest.wargame_premium.game.Player;
@@ -18,6 +19,7 @@ import com.dreamest.wargame_premium.utilities.MySharedPreferences;
 
 public class TopTenFragment extends Fragment {
     private GridLayout topTen_LAY_scoreboard;
+    private MapCallback mapCallback;
 
     private final int NAMES_OFFSET = 10;
     private final int SCORES_OFFSET = 20;
@@ -26,9 +28,6 @@ public class TopTenFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-    }
-
-    private void focusOnMap() {
     }
 
     @Nullable
@@ -40,12 +39,18 @@ public class TopTenFragment extends Fragment {
         return view;
     }
 
+    public void setMapCallback(MapCallback mapCallback) {
+        this.mapCallback = mapCallback;
+    }
+
     private void loadLeaderboards() {
         Leaderboards leaderboards = (Leaderboards) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, new Leaderboards());
 
-        // 0 - 9 numbers
-        // 10-19 Name placements
-        // 20-29 Score placements
+        /*
+            0 - 9 numbers
+            10-19 Name placements
+            20-29 Score placements
+        */
         for (int i = 0; i < Leaderboards.MAX_SIZE; i++) {
             TextView number = (TextView) topTen_LAY_scoreboard.getChildAt(i);
             TextView name = (TextView) topTen_LAY_scoreboard.getChildAt(i + NAMES_OFFSET);
@@ -54,31 +59,38 @@ public class TopTenFragment extends Fragment {
             name.setText(p.getName());
             score.setText("" + p.getScore());
 
+
             if (p.isValid()) {
+                if (mapCallback != null)
+                    mapCallback.addMarker(p.getName(), p.getPosition());
                 number.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        focusOnMap();
+                        if (mapCallback != null)
+                            mapCallback.focusPosition(p.getPosition());
                     }
                 });
                 name.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        focusOnMap();
+                        if (mapCallback != null)
+                            mapCallback.focusPosition(p.getPosition());
                     }
                 });
                 score.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        focusOnMap();
+                        if (mapCallback != null)
+                            mapCallback.focusPosition(p.getPosition());
                     }
                 });
             }
         }
     }
 
-    private void findViews(View view) {
+    private void initViews(View view) {
         topTen_LAY_scoreboard = view.findViewById(R.id.topTen_LAY_scoreboard);
+
     }
 
 

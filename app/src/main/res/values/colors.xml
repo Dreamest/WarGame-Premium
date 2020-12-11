@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="cream">#E4DBD1</color>
     <color name="gold">#E4B91E</color>
+    <color name="scores">#0080FF</color>
+    <color name="title">#FF0000</color>
+
 </resources>

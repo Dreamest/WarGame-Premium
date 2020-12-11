@@ -6,4 +6,19 @@
     <string name="player_2_name">Player 2 Name</string>
     <string name="return_button">return</string>
     <string name="title_activity_map_fragment">Map</string>
+    <string name="score_title">Pts</string>
+    <string name="name_title">name</string>
+    <string name="_1">1:</string>
+    <string name="_2">2:</string>
+    <string name="_3">3:</string>
+    <string name="_4">4:</string>
+    <string name="_5">5:</string>
+    <string name="_6">6:</string>
+    <string name="_7">7:</string>
+    <string name="_8">8:</string>
+    <string name="_9">9:</string>
+    <string name="_10">10:</string>
+    <string name="name">NAME</string>
+    <string name="_26">26</string>
+    <string name="leaderboards_title">Leaderboards</string>
 </resources>

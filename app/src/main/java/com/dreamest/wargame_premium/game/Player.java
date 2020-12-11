@@ -3,14 +3,14 @@ package com.dreamest.wargame_premium.game;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dreamest.wargame_premium.utilities.GpsTracker;
+import com.google.android.gms.maps.model.LatLng;
 
 public class Player {
     private int imageID; // todo: remove this
     private String name;
     private int score;
     private boolean valid;
-    private double latitude;
-    private double longitude;
+    private LatLng position;
 
     public Player() {
     }
@@ -42,28 +42,20 @@ public class Player {
         this.name = name;
     }
 
+    public LatLng getPosition() {
+        return position;
+    }
+
+    public void setPosition(LatLng position) {
+        this.position = position;
+    }
+
     public void setScore(int score) {
         this.score = score;
     }
 
     public boolean isValid() {
         return valid;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
     }
 
     public void setValid(boolean valid) {
@@ -73,12 +65,12 @@ public class Player {
     public void updateLocation(AppCompatActivity activity) {
 
         GpsTracker gpsTracker = new GpsTracker(activity);
-        if (gpsTracker.canGetLocation()) {
-            this.latitude = gpsTracker.getLatitude();
-            this.longitude = gpsTracker.getLongitude();
-        } else {
+        if (gpsTracker.canGetLocation())
+            position = new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude());
+//            this.latitude = gpsTracker.getLatitude();
+//            this.longitude = gpsTracker.getLongitude();
+        else
             gpsTracker.showSettingsAlert();
-        }
         gpsTracker.stopUsingGPS();
     }
 }

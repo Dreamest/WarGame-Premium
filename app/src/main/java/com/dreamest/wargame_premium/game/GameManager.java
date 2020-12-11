@@ -57,8 +57,8 @@ public class GameManager {
 
     private Player loadPlayer(String key, AppCompatActivity activity) {
         if (key.equals(MySharedPreferences.KEYS.LEFT_PLAYER))
-            return (Player) MySharedPreferences.getMsp().getObject(key, new Player(R.drawable.ic_character_1, "Left Player", true));
-        return (Player) MySharedPreferences.getMsp().getObject(key, new Player(R.drawable.ic_character_2, "Right Player", true));
+            return (Player) MySharedPreferences.getMsp().getObject(key, new Player(R.drawable.ic_character_1, "Left", true));
+        return (Player) MySharedPreferences.getMsp().getObject(key, new Player(R.drawable.ic_character_2, "Right", true));
     }
 
     public List<Card> getLeftDeck() {
