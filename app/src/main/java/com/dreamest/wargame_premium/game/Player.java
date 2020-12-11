@@ -6,7 +6,7 @@ import com.dreamest.wargame_premium.utilities.GpsTracker;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Player {
-    private int imageID; // todo: remove this
+    private int imageID; //We said in class this isn't a recommended class attribute, but in this case it's either saving this, or saving the avatar name and working a lot harder every time.
     private String name;
     private int score;
     private boolean valid;

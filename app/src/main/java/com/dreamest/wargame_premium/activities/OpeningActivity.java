@@ -53,11 +53,6 @@ public class OpeningActivity extends BaseActivity {
         });
     }
 
-//    private void ensureLeaderboards() {// TODO: 12/8/20 check if this function is needed.
-//        Leaderboards leaderboards = (Leaderboards) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, new Leaderboards());
-//        MySharedPreferences.getMsp().putObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, leaderboards);
-//    }
-
     private void openLeaderboards() {
         Intent myIntent = new Intent(this, LeaderboardsActivity.class);
         startActivity(myIntent);

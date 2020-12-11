@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gm = new GameManager(this);
+        gm = new GameManager();
 
         running = false;
 
@@ -101,8 +101,8 @@ public class MainActivity extends BaseActivity {
             gm.play();
             cardFacingUp = true;
             Utility.playSound(this, R.raw.snd_card_flip);
-            main_IMG_leftCard.setImageResource(gm.getLeftCard().getId());
-            main_IMG_rightCard.setImageResource(gm.getRightCard().getId());
+            main_IMG_leftCard.setImageResource(getResources().getIdentifier(gm.getLeftCard().getName(), "drawable", getPackageName()));
+            main_IMG_rightCard.setImageResource(getResources().getIdentifier(gm.getRightCard().getName(), "drawable", getPackageName()));
             updateScore();
         } else
             faceDownCards();

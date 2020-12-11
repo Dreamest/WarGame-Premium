@@ -1,7 +1,5 @@
 package com.dreamest.wargame_premium.game;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.dreamest.wargame_premium.R;
 import com.dreamest.wargame_premium.utilities.MySharedPreferences;
 
@@ -20,12 +18,12 @@ public class GameManager {
     private Card leftCard, rightCard;
 
 
-    public GameManager(AppCompatActivity activity) {
-        leftPlayer = loadPlayer(MySharedPreferences.KEYS.LEFT_PLAYER, activity);
-        rightPlayer = loadPlayer(MySharedPreferences.KEYS.RIGHT_PLAYER, activity);
+    public GameManager() {
+        leftPlayer = loadPlayer(MySharedPreferences.KEYS.LEFT_PLAYER);
+        rightPlayer = loadPlayer(MySharedPreferences.KEYS.RIGHT_PLAYER);
         leftPlayer.setScore(0);
         rightPlayer.setScore(0);
-        createDecks(activity);
+        createDecks();
 
     }
 
@@ -39,11 +37,11 @@ public class GameManager {
             rightPlayer.setScore(rightPlayer.getScore() + 1);
     }
 
-    private void createDecks(AppCompatActivity activity) {
+    private void createDecks() {
         List deckOfCards = new ArrayList<Card>();
         for (String suit : new String[]{"spades", "clubs", "hearts", "diamonds"}) {
             for (int value = 2; value <= 14; value++) {
-                deckOfCards.add(new Card(value, suit, activity));
+                deckOfCards.add(new Card(value, suit));
             }
         }
         Collections.shuffle(deckOfCards);
@@ -55,7 +53,7 @@ public class GameManager {
         Collections.shuffle(rightDeck);
     }
 
-    private Player loadPlayer(String key, AppCompatActivity activity) {
+    private Player loadPlayer(String key) {
         if (key.equals(MySharedPreferences.KEYS.LEFT_PLAYER))
             return (Player) MySharedPreferences.getMsp().getObject(key, new Player(R.drawable.ic_character_1, "Left", true));
         return (Player) MySharedPreferences.getMsp().getObject(key, new Player(R.drawable.ic_character_2, "Right", true));
