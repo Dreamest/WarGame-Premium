@@ -14,6 +14,8 @@ public class AvatarActivity extends BaseActivity {
     public static final String CHARACTER_2 = "ic_character_2";
     public static final String CHARACTER_3 = "ic_character_3";
     public static final String CHARACTER_4 = "ic_character_4";
+    public static final int LEFT = 1;
+    public static final int RIGHT = 2;
 
     private ImageButton avatar_BTN_character1;
     private ImageButton avatar_BTN_character2;
@@ -26,10 +28,7 @@ public class AvatarActivity extends BaseActivity {
         setContentView(R.layout.activity_avatar);
 
         int currentPlayer = getIntent().getIntExtra(EXTRA_KEY_PLAYER, -1);
-        avatar_BTN_character1 = findViewById(R.id.avatar_BTN_character1);
-        avatar_BTN_character2 = findViewById(R.id.avatar_BTN_character2);
-        avatar_BTN_character3 = findViewById(R.id.avatar_BTN_character3);
-        avatar_BTN_character4 = findViewById(R.id.avatar_BTN_character4);
+        findViews();
 
         avatar_BTN_character1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +60,16 @@ public class AvatarActivity extends BaseActivity {
         });
     }
 
+    private void findViews() {
+        avatar_BTN_character1 = findViewById(R.id.avatar_BTN_character1);
+        avatar_BTN_character2 = findViewById(R.id.avatar_BTN_character2);
+        avatar_BTN_character3 = findViewById(R.id.avatar_BTN_character3);
+        avatar_BTN_character4 = findViewById(R.id.avatar_BTN_character4);
+    }
+
 
     private void chooseAvatar(int currentPlayer, String characterIconID) {
-        if (currentPlayer == 1)
+        if (currentPlayer == LEFT)
             MySharedPreferences.getMsp().putString(MySharedPreferences.KEYS.PLAYER_LEFT_AVATAR, characterIconID);
         else
             MySharedPreferences.getMsp().putString(MySharedPreferences.KEYS.PLAYER_RIGHT_AVATAR, characterIconID);

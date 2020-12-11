@@ -50,6 +50,7 @@ public class TopTenFragment extends Fragment {
             0 - 9 numbers
             10-19 Name placements
             20-29 Score placements
+            30-33 Titles(Not used)
         */
         for (int i = 0; i < Leaderboards.MAX_SIZE; i++) {
             TextView number = (TextView) topTen_LAY_scoreboard.getChildAt(i);
@@ -59,7 +60,7 @@ public class TopTenFragment extends Fragment {
             name.setText(p.getName());
             score.setText("" + p.getScore());
 
-
+            //Before it is filled, the scoreboard has invalid cells that should not be interactable.
             if (p.isValid()) {
                 if (mapCallback != null)
                     mapCallback.addMarker(p.getName(), p.getPosition());
@@ -90,7 +91,6 @@ public class TopTenFragment extends Fragment {
 
     private void initViews(View view) {
         topTen_LAY_scoreboard = view.findViewById(R.id.topTen_LAY_scoreboard);
-
     }
 
 

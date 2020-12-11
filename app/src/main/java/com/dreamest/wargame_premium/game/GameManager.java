@@ -27,6 +27,9 @@ public class GameManager {
 
     }
 
+    /**
+     * Game turn. Each player draws a card, the player with the higher score gets a point. If draw, no one gets a point
+     */
     public void play() {
         leftCard = leftDeck.get(counter);
         rightCard = rightDeck.get(counter);
@@ -37,6 +40,10 @@ public class GameManager {
             rightPlayer.setScore(rightPlayer.getScore() + 1);
     }
 
+
+    /**
+     * Creates a basic 52 cards deck, then splits it into two 26 cards deck, one for each player
+     */
     private void createDecks() {
         List deckOfCards = new ArrayList<Card>();
         for (String suit : new String[]{"spades", "clubs", "hearts", "diamonds"}) {
@@ -53,6 +60,12 @@ public class GameManager {
         Collections.shuffle(rightDeck);
     }
 
+    /**
+     * Loads a player from SharedPreferences
+     *
+     * @param key denotes if it's left or right player
+     * @return Player from SharedPreferences if exists, else default player
+     */
     private Player loadPlayer(String key) {
         if (key.equals(MySharedPreferences.KEYS.LEFT_PLAYER))
             return (Player) MySharedPreferences.getMsp().getObject(key, new Player(R.drawable.ic_character_1, "Left", true));
@@ -125,7 +138,6 @@ public class GameManager {
 
     /**
      * Determines the game winner
-     *
      * @return winning player in case of a victory, null if draw
      */
     public Player determineWinner() {

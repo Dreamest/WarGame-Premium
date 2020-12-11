@@ -37,7 +37,7 @@ public class MainActivity extends BaseActivity {
     private ProgressBar main_BAR_progress;
     private ImageView main_IMG_background;
 
-    private final int DELAY = 200;
+    private final int DELAY = 1000;
 
     private Timer carousalTimer;
     private GameManager gm;
@@ -50,10 +50,36 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gm = new GameManager();
+        findViews();
+        initGame();
+        requestPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
-        running = false;
+        main_BTN_deal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.playSound(MainActivity.this, R.raw.snd_click2);
+                if (!running) {
+                    running = true;
+                    startAutoPlay();
+                } else {
+                    stopAutoPlay();
+                }
+            }
+        });
 
+    }
+
+    private void requestPermission(String permission) {
+        try {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, 101);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void findViews() {
         main_BTN_deal = findViewById(R.id.main_BTN_deal);
         main_IMG_leftCard = findViewById(R.id.main_IMG_leftCard);
         main_IMG_rightCard = findViewById(R.id.main_IMG_rightCard);
@@ -65,27 +91,6 @@ public class MainActivity extends BaseActivity {
         main_IMG_leftIcon = findViewById(R.id.main_IMG_leftIcon);
         main_BAR_progress = findViewById(R.id.main_BAR_progress);
         main_IMG_background = findViewById(R.id.main_IMG_background);
-        initGame();
-
-        main_BTN_deal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!running) {
-                    running = true;
-                    startAutoPlay();
-                } else {
-                    stopAutoPlay();
-                }
-            }
-        });
-
-        try {
-            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -144,8 +149,8 @@ public class MainActivity extends BaseActivity {
             Leaderboards leaderboards = (Leaderboards) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, new Leaderboards());
             leaderboards.updateLeaderboards(winner);
             MySharedPreferences.getMsp().putObject(MySharedPreferences.KEYS.LEADERBOARDS_KEY, leaderboards);
-            Utility.playSound(this, R.raw.snd_applause);
             myIntent.putExtra(ResultsActivity.EXTRA_KEY_WINNER, winner.getName());
+            Utility.playSound(this, R.raw.snd_applause);
         } else {
             Utility.playSound(this, R.raw.snd_awww);
             myIntent.putExtra(ResultsActivity.EXTRA_KEY_WINNER, GameManager.TIE);
@@ -155,12 +160,9 @@ public class MainActivity extends BaseActivity {
         finish();
     }
 
-//
-//    public void updateLocation(Player winner){
-//
-//    }
-
     private void initGame() {
+        gm = new GameManager();
+        running = false;
         main_BTN_deal.setBackgroundResource(R.drawable.ic_play_button);
         faceDownCards();
         Glide.with(this).load(R.drawable.game_background).into(main_IMG_background);

@@ -6,6 +6,11 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class HideUI {
+    /**
+     * Hides system UI, thus allowing the app to run on full screen.
+     *
+     * @param activity current activity
+     */
 
     public static void hideSystemUI(AppCompatActivity activity) {
         // Enables regular immersive mode.

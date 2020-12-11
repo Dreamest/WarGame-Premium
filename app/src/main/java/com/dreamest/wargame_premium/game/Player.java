@@ -62,13 +62,17 @@ public class Player {
         this.valid = valid;
     }
 
+
+    /**
+     * updates the player location to the place where he won the match.
+     *
+     * @param activity
+     */
     public void updateLocation(AppCompatActivity activity) {
 
         GpsTracker gpsTracker = new GpsTracker(activity);
         if (gpsTracker.canGetLocation())
             position = new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude());
-//            this.latitude = gpsTracker.getLatitude();
-//            this.longitude = gpsTracker.getLongitude();
         else
             gpsTracker.showSettingsAlert();
         gpsTracker.stopUsingGPS();

@@ -30,25 +30,16 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        settings_TXT_leftName = findViewById(R.id.settings_TXT_leftName);
-        settings_TXT_rightName = findViewById(R.id.settings_TXT_rightName);
-        settings_BTN_leftAvatar = findViewById(R.id.settings_BTN_leftAvatar);
-        settings_BTN_rightAvatar = findViewById(R.id.settings_BTN_rightAvatar);
-        settings_BTN_return = findViewById(R.id.settings_BTN_return);
+        findViews();
 
-        leftPlayer = (Player) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.LEFT_PLAYER, new Player(R.drawable.ic_character_1, "", true));
-        rightPlayer = (Player) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.RIGHT_PLAYER, new Player(R.drawable.ic_character_2, "", true));
-
-        settings_TXT_leftName.setText(leftPlayer.getName());
-        settings_TXT_rightName.setText(rightPlayer.getName());
-
+        loadPlayers();
 
         settings_TXT_leftName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     settings_TXT_leftName.clearFocus();
-                    HideUI.hideSystemUI(SettingsActivity.this);
+                    HideUI.hideSystemUI(SettingsActivity.this); //Ensures we return to fullscreen after leaving the editor(doesn't work if clicked back)
                 }
                 return false;
             }
@@ -60,7 +51,7 @@ public class SettingsActivity extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
 
                     settings_TXT_rightName.clearFocus();
-                    HideUI.hideSystemUI(SettingsActivity.this);
+                    HideUI.hideSystemUI(SettingsActivity.this); //Ensures we return to fullscreen after leaving the editor(doesn't work if clicked back)
                 }
                 return false;
             }
@@ -70,7 +61,7 @@ public class SettingsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Utility.playSound(SettingsActivity.this, R.raw.snd_button_click);
-                openAvatarMenu(1);
+                openAvatarMenu(AvatarActivity.LEFT);
 
             }
         });
@@ -78,7 +69,7 @@ public class SettingsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Utility.playSound(SettingsActivity.this, R.raw.snd_button_click);
-                openAvatarMenu(2);
+                openAvatarMenu(AvatarActivity.RIGHT);
             }
         });
 
@@ -91,7 +82,28 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
+    private void loadPlayers() {
+        leftPlayer = (Player) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.LEFT_PLAYER, new Player(R.drawable.ic_character_1, "", true));
+        rightPlayer = (Player) MySharedPreferences.getMsp().getObject(MySharedPreferences.KEYS.RIGHT_PLAYER, new Player(R.drawable.ic_character_2, "", true));
+
+        settings_TXT_leftName.setText(leftPlayer.getName());
+        settings_TXT_rightName.setText(rightPlayer.getName());
+    }
+
+    private void findViews() {
+        settings_TXT_leftName = findViewById(R.id.settings_TXT_leftName);
+        settings_TXT_rightName = findViewById(R.id.settings_TXT_rightName);
+        settings_BTN_leftAvatar = findViewById(R.id.settings_BTN_leftAvatar);
+        settings_BTN_rightAvatar = findViewById(R.id.settings_BTN_rightAvatar);
+        settings_BTN_return = findViewById(R.id.settings_BTN_return);
+    }
+
     private void close() {
+        storePlayers();
+        finish();
+    }
+
+    private void storePlayers() {
         int leftID = Utility.drawableNameToID(this, MySharedPreferences.getMsp().getString(MySharedPreferences.KEYS.PLAYER_LEFT_AVATAR, AvatarActivity.CHARACTER_1));
         int rightID = Utility.drawableNameToID(this, MySharedPreferences.getMsp().getString(MySharedPreferences.KEYS.PLAYER_RIGHT_AVATAR, AvatarActivity.CHARACTER_2));
 
@@ -100,12 +112,11 @@ public class SettingsActivity extends BaseActivity {
 
         MySharedPreferences.getMsp().putObject(MySharedPreferences.KEYS.LEFT_PLAYER, leftPlayer);
         MySharedPreferences.getMsp().putObject(MySharedPreferences.KEYS.RIGHT_PLAYER, rightPlayer);
-
-        finish();
     }
 
+
     @Override
-    protected void onDestroy() {
+    protected void onDestroy() { //ensures players are saved when the activity ends
         super.onDestroy();
         close();
     }
@@ -117,7 +128,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume() { //ensures the avatars are updating when returning from Avatar activity
         super.onResume();
         updateAvatars();
     }

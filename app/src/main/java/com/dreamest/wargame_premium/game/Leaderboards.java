@@ -42,11 +42,17 @@ public class Leaderboards {
         return p2.getScore() - p1.getScore();
     }
 
-    public void updateLeaderboards(Player newPlayer){
+
+    /**
+     * Updates and sorts the leaderboards
+     *
+     * @param newPlayer new player to be added
+     */
+    public void updateLeaderboards(Player newPlayer) {
         players.add(newPlayer);
         Collections.sort(players, this::compareScore);
-        if(players.size() > MAX_SIZE)
+        if (players.size() > MAX_SIZE)
             players.remove(MAX_SIZE);
-        lowestScore = players.get(MAX_SIZE -1).getScore();
+        lowestScore = players.get(MAX_SIZE - 1).getScore();
     }
 }

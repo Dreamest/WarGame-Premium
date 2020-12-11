@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -7,17 +7,37 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/leaderboards_TXT_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
+        android:layout_centerHorizontal="true"
+
         android:text="@string/leaderboards_title"
         android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/leaderboards_BTN_return"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+
+        android:backgroundTint="@color/white"
+        android:text="@string/return_button"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+
+
+        />
+
 
     <LinearLayout
         android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
+        android:layout_below="@+id/leaderboards_TXT_title"
         android:gravity="center_vertical">
 
         <FrameLayout
@@ -25,8 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="6dp"
-            android:layout_weight="0.8"
-            />
+            android:layout_weight="0.8" />
 
         <FrameLayout
             android:id="@+id/leaderboards_lay_map"
@@ -35,5 +54,4 @@
             android:layout_margin="6dp"
             android:layout_weight="1" />
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

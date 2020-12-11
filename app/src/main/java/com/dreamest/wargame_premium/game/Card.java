@@ -44,6 +44,11 @@ public class Card implements Comparable<Card>{
         this.name = name;
     }
 
+
+    /**
+     * @param value card number from 2 to 14
+     * @return String with the card's name
+     */
     private String valueToWord(int value) {
         String[] words = {"two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king", "ace"};
         return words[value + VALUE_OFFSET];

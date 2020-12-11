@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dreamest.wargame_premium.R;
-import com.dreamest.wargame_premium.game.Player;
 import com.dreamest.wargame_premium.utilities.Utility;
 
 public class ResultsActivity extends BaseActivity {
@@ -45,20 +44,8 @@ public class ResultsActivity extends BaseActivity {
         });
 
         String winner = getIntent().getStringExtra(EXTRA_KEY_WINNER);
-//        String winner;
-//        if (result.equals(GameManager.TIE))
-//            winner = result;
-//        else {
-//            Gson gson = new Gson();
-//            Player player = gson.fromJson(result, Player.class);
-//            winner = player.getName();
-//        }
-
         int score = getIntent().getIntExtra(EXTRA_KEY_SCORE, -1);
         results_LBL_winner.setText(winner + "\nTop Score: " + score);
-    }
-
-    private void updateLeaderboards(Player player) {
     }
 
     private void restartGame() {

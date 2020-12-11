@@ -23,7 +23,7 @@ public class MapFragment extends Fragment {
 
     private GoogleMap googleMap;
     private MapView map_MAP_gmap;
-    private final int ZOOM = 10;
+    private final int ZOOM = 8;
 
     @Nullable
     @Override
@@ -33,20 +33,13 @@ public class MapFragment extends Fragment {
         map_MAP_gmap.onCreate(savedInstanceState);
         map_MAP_gmap.onResume();
 
-        test();
-
-
-        return view;
-    }
-
-    private void test() {
-
-
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return view;
     }
 
     @Override
@@ -73,6 +66,12 @@ public class MapFragment extends Fragment {
         map_MAP_gmap.onLowMemory();
     }
 
+    /**
+     * Adds a new marker to the map
+     *
+     * @param title    - title of the marker
+     * @param position - position of the marker
+     */
     public void addMarker(String title, LatLng position) {
         map_MAP_gmap.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -83,6 +82,11 @@ public class MapFragment extends Fragment {
 
     }
 
+    /**
+     * Focuses on given position in the map
+     *
+     * @param position position to focus on
+     */
     public void focusOn(LatLng position) {
         map_MAP_gmap.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -91,6 +95,5 @@ public class MapFragment extends Fragment {
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
-
     }
 }
