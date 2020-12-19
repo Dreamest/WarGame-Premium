@@ -23,6 +23,7 @@ public class GameManager {
         rightPlayer = loadPlayer(MySharedPreferences.KEYS.RIGHT_PLAYER);
         leftPlayer.setScore(0);
         rightPlayer.setScore(0);
+        counter = -1;
         createDecks();
 
     }
@@ -31,13 +32,33 @@ public class GameManager {
      * Game turn. Each player draws a card, the player with the higher score gets a point. If draw, no one gets a point
      */
     public void play() {
+        counter++;
         leftCard = leftDeck.get(counter);
         rightCard = rightDeck.get(counter);
-        counter++;
         if (leftCard.compareTo(rightCard) > 0)
             leftPlayer.setScore(leftPlayer.getScore() + 1);
         else if (leftCard.compareTo(rightCard) < 0)
             rightPlayer.setScore(rightPlayer.getScore() + 1);
+    }
+
+    public void playBackward() {
+        if (leftCard.compareTo(rightCard) > 0)
+            leftPlayer.setScore(leftPlayer.getScore() - 1);
+        else if (leftCard.compareTo(rightCard) < 0)
+            rightPlayer.setScore(rightPlayer.getScore() - 1);
+        counter--;
+        leftCard = leftDeck.get(counter);
+        rightCard = rightDeck.get(counter);
+    }
+
+
+    /**
+     * Resets game manager
+     */
+    public void setFirstMove() {
+        counter = -1;
+        leftPlayer.setScore(0);
+        rightPlayer.setScore(0);
     }
 
 
@@ -147,4 +168,6 @@ public class GameManager {
             return rightPlayer;
         return null;
     }
+
+
 }
