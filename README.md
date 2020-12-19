@@ -14,6 +14,7 @@ Each player can choose his avatar out of the four options by clicking on it.
 
 ![Game - Start](https://i.ibb.co/LRqnvJK/Whats-App-Image-2020-12-11-at-21-28-42.jpg)
 Before pressing play, the cards will be facing down. Clicking play will start the game's auto-play feature.
+You can also swipe left or right to play back or forward a turn if you wish.
 
 ![Game - Pause](https://i.ibb.co/7r2fc4s/fa92d563-8a31-4e81-b9cb-21a351078b4d.jpg)
 Pressing the play button again(now appears as pause) will stop auto-play. We can also see the progress bar moving up with each turn.
@@ -29,5 +30,6 @@ Entering the leaderboards leads us to this screen, in which two fragments exists
 - The app plays audio files on button presses, turns and map interactions.
 - The game itself is run automatically using multithreading.
 - Data is stored between runs, the leaderboards and player information is saved between plays.
+- Gameplay using swipe gestures.
 
 
