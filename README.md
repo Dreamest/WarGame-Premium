@@ -1,4 +1,4 @@
-# WarGame-Basic
+# WarGame-Premium
 
 ![Life Cycle](https://i.ibb.co/sKBhhfg/Screenshot-from-2020-12-11-21-49-58.png)
 
